@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/api/1.0/department")
-public class DepratmentController {
+public class DepartmentController {
 
     private final AtomicLong counter = new AtomicLong();
 
