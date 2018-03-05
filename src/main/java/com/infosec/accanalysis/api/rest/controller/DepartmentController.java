@@ -14,17 +14,17 @@ public class DepartmentController {
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping
-    public List<Department> departments() {
+    public List<Department> GetAllDepartments() {
         return DepartmentRepository.findAllDepartments();
     }
 
     @GetMapping("/{id}")
-    public Department departmentById(@PathVariable(value="id") int departmentId) {
+    public Department GetDepartment(@PathVariable(value="id") int departmentId) {
         return DepartmentRepository.findDepartment(departmentId);
     }
 
-    @GetMapping("/parent/{id}")
-    public List<Department> departmentsByParent(@PathVariable(value="id") int parentId) {
+    @GetMapping("/children/{id}")
+    public List<Department> getChildDepartments(@PathVariable(value="id") int parentId) {
         return DepartmentRepository.findChildDepartments(parentId);
     }
 }
