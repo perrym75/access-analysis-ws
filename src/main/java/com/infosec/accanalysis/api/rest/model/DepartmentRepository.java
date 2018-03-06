@@ -56,6 +56,28 @@ public class DepartmentRepository {
         return departments;
     }
 
+    public static List<Department> findChildDepartments() {
+        List<Department> departments = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID IS NULL");
+        ) {
+            while (rs.next()) {
+                Department dep = new Department(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3));
+                departments.add(dep);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return departments;
+    }
+
     public static Department findDepartment(int departmentId) {
         try (
                 Connection conn = DriverManager.getConnection(url);
