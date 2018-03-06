@@ -1,7 +1,8 @@
 package com.infosec.accanalysis.api.rest.controller;
 
-import com.infosec.accanalysis.api.rest.model.Department;
-import com.infosec.accanalysis.api.rest.model.DepartmentRepository;
+import com.infosec.accanalysis.dbo.model.Department;
+import com.infosec.accanalysis.dbo.repository.DepartmentRepository;
+import com.infosec.accanalysis.dbo.repository.RepositoryFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,23 +14,25 @@ public class DepartmentController {
 
     private final AtomicLong counter = new AtomicLong();
 
+    DepartmentRepository departmentRepository = RepositoryFactory.getDepartmentRepository("mssql");
+
     @GetMapping
     public List<Department> getAllDepartments() {
-        return DepartmentRepository.findAllDepartments();
+        return departmentRepository.findAllDepartments();
     }
 
     @GetMapping("/{id}")
     public Department getDepartment(@PathVariable(value="id") int departmentId) {
-        return DepartmentRepository.findDepartment(departmentId);
+        return departmentRepository.findDepartment(departmentId);
     }
 
     @GetMapping("/children")
     public List<Department> getChildDepartments() {
-        return DepartmentRepository.findChildDepartments();
+        return departmentRepository.findChildDepartments();
     }
 
     @GetMapping("/children/{id}")
     public List<Department> getChildDepartments(@PathVariable(value="id") int parentId) {
-        return DepartmentRepository.findChildDepartments(parentId);
+        return departmentRepository.findChildDepartments(parentId);
     }
 }

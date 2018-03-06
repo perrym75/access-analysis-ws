@@ -1,16 +1,18 @@
 package com.infosec.accanalysis.api.rest.model;
 
-import com.infosec.accanalysis.api.rest.model.Department;
+import com.infosec.accanalysis.dbo.model.Department;
+import com.infosec.accanalysis.dbo.repository.DepartmentRepository;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DepartmentRepository {
+public class DepartmentRepositoryPostgreSQL implements DepartmentRepository {
 
     private static String url = "jdbc:sqlserver://10.2.2.20;database=CL_INFOSEC;user=cl_infosec;password=cl_infosec";
 
-    public static List<Department> findAllDepartments() {
+    @Override
+    public List<Department> findAllDepartments() {
         List<Department> departments = new LinkedList<>();
 
         try (
@@ -32,7 +34,8 @@ public class DepartmentRepository {
         return departments;
     }
 
-    public static List<Department> findChildDepartments(int parentId) {
+    @Override
+    public List<Department> findChildDepartments(int parentId) {
         List<Department> departments = new LinkedList<>();
 
         try (
@@ -56,7 +59,8 @@ public class DepartmentRepository {
         return departments;
     }
 
-    public static List<Department> findChildDepartments() {
+    @Override
+    public List<Department> findChildDepartments() {
         List<Department> departments = new LinkedList<>();
 
         try (
@@ -78,7 +82,8 @@ public class DepartmentRepository {
         return departments;
     }
 
-    public static Department findDepartment(int departmentId) {
+    @Override
+    public Department findDepartment(int departmentId) {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE DEPARTMENT_ID = ?");
