@@ -1,4 +1,4 @@
-package com.infosec.accanalysis.api.rest.model;
+package com.infosec.accanalysis.dbo.model;
 
 public class Department {
     private int department_id;
