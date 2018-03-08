@@ -93,7 +93,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         ) {
             st.setInt(1, departmentId);
             try (ResultSet rs = st.executeQuery()) {
-                while (rs.next()) {
+                if (rs.next()) {
                     return new Department(rs.getInt(1),
                             rs.getInt(2),
                             rs.getString(3));
