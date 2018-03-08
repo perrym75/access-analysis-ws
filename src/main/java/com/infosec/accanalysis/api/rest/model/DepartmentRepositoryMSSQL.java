@@ -2,7 +2,8 @@ package com.infosec.accanalysis.api.rest.model;
 
 import com.infosec.accanalysis.dbo.model.Department;
 import com.infosec.accanalysis.dbo.repository.DepartmentRepository;
-import com.infosec.accanalysis.dbo.repository.RepositoryFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ import java.util.List;
 public class DepartmentRepositoryMSSQL implements DepartmentRepository {
 
     private static String url = "jdbc:sqlserver://10.2.2.20;database=CL_INFOSEC;user=cl_infosec;password=cl_infosec";
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public List<Department> findAllDepartments() {
@@ -28,7 +30,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 departments.add(dep);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.toString());
             return null;
         }
 
@@ -53,7 +55,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.toString());
             return null;
         }
 
@@ -76,7 +78,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 departments.add(dep);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.toString());
             return null;
         }
 
@@ -98,7 +100,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug(e.toString());
         }
 
         return null;
