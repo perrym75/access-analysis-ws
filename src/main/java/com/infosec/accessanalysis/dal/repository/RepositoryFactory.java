@@ -1,4 +1,4 @@
-package com.infosec.accanalysis.dbo.repository;
+package com.infosec.accessanalysis.dal.repository;
 
 import java.util.Map;
 import java.util.HashMap;

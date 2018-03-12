@@ -1,4 +1,4 @@
-package com.infosec.accanalysis.dbo.model;
+package com.infosec.accessanalysis.dal.model;
 
 public class Department {
     private int department_id;

@@ -1,4 +1,4 @@
-package com.infosec.accanalysis.api.rest.controller;
+package com.infosec.accessanalysis.api.rest.controller;
 
 import org.springframework.web.bind.annotation.*;
 
