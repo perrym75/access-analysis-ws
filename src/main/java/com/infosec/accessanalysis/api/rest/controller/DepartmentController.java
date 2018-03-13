@@ -15,7 +15,7 @@ public class DepartmentController {
 
     private final AtomicLong counter = new AtomicLong();
 
-    DepartmentRepository departmentRepository = RepositoryFactory.getDepartmentRepository("mssql");
+    private DepartmentRepository departmentRepository = RepositoryFactory.getDepartmentRepository("mssql");
 
     @GetMapping
     public List<Department> getAllDepartments(@RequestParam(value="page", defaultValue = "0") long page,

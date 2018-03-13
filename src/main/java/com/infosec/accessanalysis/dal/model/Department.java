@@ -1,30 +1,34 @@
 package com.infosec.accessanalysis.dal.model;
 
-public class Department {
-    private int department_id;
-    private int parent_id;
-    private String name;
+import java.util.LinkedList;
+import java.util.List;
 
-    public Department(int department_id, int parent_id, String name) {
-        this.department_id = department_id;
-        this.parent_id = parent_id;
+public class Department {
+    private long id;
+    private long parentId;
+    private String name;
+    private List<Personage> employees = new LinkedList<>();
+
+    public Department(long id, long parent_id, String name) {
+        this.id = id;
+        this.parentId = parent_id;
         this.name = name;
     }
 
-    public int getDepartmentID() {
-        return department_id;
+    public long getId() {
+        return id;
     }
 
-    public void setDepartmentID(int department_id) {
-        this.department_id = department_id;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public int getParentID() {
-        return parent_id;
+    public long getParentID() {
+        return parentId;
     }
 
-    public void setParentID(int parent_id) {
-        this.parent_id = parent_id;
+    public void setParentID(long parent_id) {
+        this.parentId = parent_id;
     }
 
     public String getName() {
@@ -33,5 +37,13 @@ public class Department {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Personage> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Personage> employees) {
+        this.employees = employees;
     }
 }

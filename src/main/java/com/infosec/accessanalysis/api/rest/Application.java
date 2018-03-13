@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
+        "com.infosec.accessanalysis.api.rest",
         "com.infosec.accessanalysis.api.rest.controller"})
 public class Application {
 
