@@ -16,7 +16,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
 
     @Override
     public List<Resource> findAll() throws SQLException {
-        List<Resource> departments = new LinkedList<>();
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -43,16 +43,16 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getLong(6));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Resource> findRangeOfAll(long from, long count) throws SQLException {
-        List<Resource> departments = new LinkedList<>();
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -91,7 +91,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                             rs.getString(4),
                             rs.getString(5),
                             rs.getLong(6));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
@@ -100,12 +100,12 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             throw e;
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Resource> findChildren(long id) throws SQLException {
-        List<Resource> departments = new LinkedList<>();
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -135,12 +135,12 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                             rs.getString(4),
                             rs.getString(5),
                             rs.getLong(6));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -184,7 +184,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
 
     @Override
     public List<Resource> findRoot() throws SQLException {
-        List<Resource> departments = new LinkedList<>();
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -213,11 +213,11 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         rs.getString(4),
                         rs.getString(5),
                         rs.getLong(6));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -260,7 +260,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
 
     @Override
     public List<Resource> findByAgent(long id) throws SQLException {
-        List<Resource> departments = new LinkedList<>();
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -290,11 +290,11 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                             rs.getString(4),
                             rs.getString(5),
                             rs.getLong(6));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 }

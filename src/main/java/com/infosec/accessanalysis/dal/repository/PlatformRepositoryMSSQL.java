@@ -16,7 +16,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
 
     @Override
     public List<Platform> findAll() throws SQLException {
-        List<Platform> departments = new LinkedList<>();
+        List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -39,16 +39,16 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Platform> findRangeOfAll(long from, long count) throws SQLException {
-        List<Platform> departments = new LinkedList<>();
+        List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -83,7 +83,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                             rs.getString(3),
                             rs.getString(4),
                             rs.getString(5));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
@@ -92,12 +92,12 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
             throw e;
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Platform> findChildren(long id) throws SQLException {
-        List<Platform> departments = new LinkedList<>();
+        List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -122,12 +122,12 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                             rs.getString(3),
                             rs.getString(4),
                             rs.getString(5));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -166,7 +166,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
 
     @Override
     public List<Platform> findRoot() throws SQLException {
-        List<Platform> departments = new LinkedList<>();
+        List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -190,11 +190,11 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override

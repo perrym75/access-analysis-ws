@@ -16,7 +16,7 @@ public class AgentRepositoryMSSQL implements AgentRepository {
 
     @Override
     public List<Agent> findAll() throws SQLException {
-        List<Agent> departments = new LinkedList<>();
+        List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -39,16 +39,16 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         rs.getLong(3),
                         rs.getString(4),
                         rs.getString(5));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Agent> findRangeOfAll(long from, long count) throws SQLException {
-        List<Agent> departments = new LinkedList<>();
+        List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -83,7 +83,7 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                             rs.getLong(3),
                             rs.getString(4),
                             rs.getString(5));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
@@ -92,12 +92,12 @@ public class AgentRepositoryMSSQL implements AgentRepository {
             throw e;
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Agent> findChildren(long id) throws SQLException {
-        List<Agent> departments = new LinkedList<>();
+        List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -122,12 +122,12 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                             rs.getLong(3),
                             rs.getString(4),
                             rs.getString(5));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -166,7 +166,7 @@ public class AgentRepositoryMSSQL implements AgentRepository {
 
     @Override
     public List<Agent> findRoot() throws SQLException {
-        List<Agent> departments = new LinkedList<>();
+        List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -190,11 +190,11 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         rs.getLong(3),
                         rs.getString(4),
                         rs.getString(5));
-                departments.add(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -232,7 +232,7 @@ public class AgentRepositoryMSSQL implements AgentRepository {
 
     @Override
     public List<Agent> findByPlatform(long id) throws SQLException {
-        List<Agent> departments = new LinkedList<>();
+        List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -257,11 +257,11 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                             rs.getLong(3),
                             rs.getString(4),
                             rs.getString(5));
-                    departments.add(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 }

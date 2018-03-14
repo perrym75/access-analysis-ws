@@ -17,7 +17,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
 
     @Override
     public List<Department> findAll() throws SQLException {
-        List<Department> departments = new LinkedList<>();
+        List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -25,21 +25,21 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE IS_DELETED = 0 ORDER BY DEPARTMENT_ID");
         ) {
             while (rs.next()) {
-                Department dep = new Department(
+                Department entity = new Department(
                         rs.getLong(1),
                         rs.getLong(2),
                         rs.getString(3));
-                loadChildObjects(dep);
-                departments.add(dep);
+                loadChildObjects(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Department> findRangeOfAll(long from, long count) throws SQLException {
-        List<Department> departments = new LinkedList<>();
+        List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -49,12 +49,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             st.setLong(2, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Department dep = new Department(
+                    Department entity = new Department(
                             rs.getLong(1),
                             rs.getLong(2),
                             rs.getString(3));
-                    loadChildObjects(dep);
-                    departments.add(dep);
+                    loadChildObjects(entity);
+                    entities.add(entity);
                 }
             }
         }
@@ -63,12 +63,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             throw e;
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
     public List<Department> findChildren(long id) throws SQLException {
-        List<Department> departments = new LinkedList<>();
+        List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -77,17 +77,17 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Department dep = new Department(
+                    Department entity = new Department(
                             rs.getLong(1),
                             rs.getLong(2),
                             rs.getString(3));
-                    loadChildObjects(dep);
-                    departments.add(dep);
+                    loadChildObjects(entity);
+                    entities.add(entity);
                 }
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -100,12 +100,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Department dep = new Department(
+                    Department entity = new Department(
                             rs.getLong(1),
                             rs.getLong(2),
                             rs.getString(3));
-                    loadChildObjects(dep);
-                    return dep;
+                    loadChildObjects(entity);
+                    return entity;
                 }
             }
         }
@@ -115,7 +115,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
 
     @Override
     public List<Department> findRoot() throws SQLException {
-        List<Department> departments = new LinkedList<>();
+        List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
@@ -123,16 +123,16 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                 ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID IS NULL AND IS_DELETED = 0");
         ) {
             while (rs.next()) {
-                Department dep = new Department(
+                Department entity = new Department(
                         rs.getLong(1),
                         rs.getLong(2),
                         rs.getString(3));
-                loadChildObjects(dep);
-                departments.add(dep);
+                loadChildObjects(entity);
+                entities.add(entity);
             }
         }
 
-        return departments;
+        return entities;
     }
 
     @Override
@@ -144,12 +144,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Department dep = new Department(
+                    Department entity = new Department(
                             rs.getLong(1),
                             rs.getLong(2),
                             rs.getString(3));
-                    loadChildObjects(dep);
-                    return dep;
+                    loadChildObjects(entity);
+                    return entity;
                 }
             }
         }
@@ -186,13 +186,13 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
             try (ResultSet rs = st.executeQuery()) {
                 List<Personage> employees = department.getEmployees();
                 while (rs.next()) {
-                    Personage personage = new Personage(
+                    Personage entity = new Personage(
                             rs.getLong(1),
                             rs.getString(2),
                             rs.getString(3),
                             rs.getString(4),
                             rs.getString(5));
-                    employees.add(personage);
+                    employees.add(entity);
                 }
             }
         }
