@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PersonageRepositoryMSSQL implements PersonageRepository {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private String url = Configuration.getDbUrl();
+    private String dbUrl = Configuration.getDbUrl();
 
     @Override
     public Personage findOne(long id) throws SQLException {
