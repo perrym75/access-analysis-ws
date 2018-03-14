@@ -15,27 +15,26 @@ public class DepartmentController {
 
     private final AtomicLong counter = new AtomicLong();
 
-    private DepartmentRepository departmentRepository = RepositoryFactory.getDepartmentRepository("mssql");
+    private DepartmentRepository repository = (DepartmentRepository) RepositoryFactory.getRepository("mssql:department");
 
     @GetMapping
-    public List<Department> getAllDepartments(@RequestParam(value="page", defaultValue = "0") long page,
+    public List<Department> getAll(@RequestParam(value="page", defaultValue = "0") long page,
                                               @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException {
-        List<Department> deps = departmentRepository.findRangeOfAll(page * count, count);
-        return deps;
+        return repository.findRangeOfAll(page * count, count);
     }
 
     @GetMapping("/{id}")
-    public Department getDepartment(@PathVariable(value="id") long departmentId) throws SQLException {
-        return departmentRepository.findOne(departmentId);
+    public Department getOne(@PathVariable(value="id") long departmentId) throws SQLException {
+        return repository.findOne(departmentId);
     }
 
     @GetMapping("/children")
-    public List<Department> getChildDepartments() throws SQLException {
-        return departmentRepository.findRoot();
+    public List<Department> getRoot() throws SQLException {
+        return repository.findRoot();
     }
 
     @GetMapping("/{id}/children")
-    public List<Department> getChildDepartments(@PathVariable(value="id") long parentId) throws SQLException {
-        return departmentRepository.findChildren(parentId);
+    public List<Department> getChildren(@PathVariable(value="id") long parentId) throws SQLException {
+        return repository.findChildren(parentId);
     }
 }
