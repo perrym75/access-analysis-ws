@@ -30,7 +30,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "FROM\n" +
                         "  dbo.PLATFORM\n" +
                         "WHERE\n" +
-                        "  IS_DELETED = 0\n");
+                        "  IS_DELETED = 0\n")
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -65,7 +65,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "FROM\n" +
                         "  PLAT\n" +
                         "WHERE\n" +
-                        "  ROW_NUM >= ? AND ROW_NUM < ?");
+                        "  ROW_NUM >= ? AND ROW_NUM < ?")
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -99,7 +99,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  dbo.PLATFORM\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?");
+                        "  PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -127,7 +127,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  dbo.PLATFORM\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?");
+                        "  PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -157,7 +157,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  dbo.PLATFORM\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID IS NULL");
+                        "  PARENT_ID IS NULL")
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -181,7 +181,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  dbo.PLATFORM\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PLATFORM_ID = ?");
+                        "  PLATFORM_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

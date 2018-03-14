@@ -33,7 +33,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "INNER JOIN\n" +
                         "\tdbo.RESOURCE_TYPE as rt\n" +
                         "ON\n" +
-                        "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n");
+                        "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n")
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -71,7 +71,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "FROM\n" +
                         "\tRES\n" +
                         "WHERE\n" +
-                        "\tROW_NUM >= ? AND ROW_NUM < ?\n");
+                        "\tROW_NUM >= ? AND ROW_NUM < ?\n")
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -109,7 +109,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "ON\n" +
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n" +
                         "WHERE\n" +
-                        "\tres.PARENT_ID = ?");
+                        "\tres.PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -141,7 +141,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "ON\n" +
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n" +
                         "WHERE\n" +
-                        "\tres.PARENT_ID = ?");
+                        "\tres.PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -175,7 +175,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "ON\n" +
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n" +
                         "WHERE\n" +
-                        "\tres.PARENT_ID IS NULL");
+                        "\tres.PARENT_ID IS NULL")
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -203,7 +203,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "ON\n" +
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n" +
                         "WHERE\n" +
-                        "\tres.RESOURCE_ID = ?");
+                        "\tres.RESOURCE_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -236,7 +236,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "ON\n" +
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n" +
                         "WHERE\n" +
-                        "\tres.AGENT_ID = ?");
+                        "\tres.AGENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
