@@ -36,14 +36,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "\tres.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID\n");
         ) {
             while (rs.next()) {
-                Resource entity = new Resource(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getLong(6));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -84,14 +77,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             st.setLong(2, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Resource entity = new Resource(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getLong(6));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -128,14 +114,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Resource entity = new Resource(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getLong(6));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -167,14 +146,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Resource entity = new Resource(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getLong(6));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -206,14 +178,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
                         "\tres.PARENT_ID IS NULL");
         ) {
             while (rs.next()) {
-                Resource entity = new Resource(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getLong(6));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -243,14 +208,7 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Resource entity = new Resource(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getLong(6));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -283,18 +241,21 @@ public class ResourceRepositoryMSSQL implements ResourceRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Resource entity = new Resource(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5),
-                            rs.getLong(6));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
 
         return entities;
+    }
+
+    private Resource createEntity(ResultSet rs) throws SQLException {
+        return new Resource(
+                rs.getLong(1),
+                rs.getLong(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5),
+                rs.getLong(6));
     }
 }

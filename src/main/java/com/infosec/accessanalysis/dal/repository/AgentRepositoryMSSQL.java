@@ -30,16 +30,10 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "FROM\n" +
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
-                        "  IS_DELETED = 0");
+                        "  IS_DELETED = 0")
         ) {
             while (rs.next()) {
-                Agent entity = new Agent(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getLong(3),
-                        rs.getString(4),
-                        rs.getString(5));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -71,19 +65,13 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "FROM\n" +
                         "  AGENT\n" +
                         "WHERE\n" +
-                        "  ROW_NUM >= ? AND ROW_NUM < ?");
+                        "  ROW_NUM >= ? AND ROW_NUM < ?")
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Agent entity = new Agent(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getLong(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -111,18 +99,12 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?");
+                        "  PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Agent entity = new Agent(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getLong(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -145,18 +127,12 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?");
+                        "  PARENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Agent entity = new Agent(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getLong(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -181,16 +157,10 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID IS NULL");
+                        "  PARENT_ID IS NULL")
         ) {
             while (rs.next()) {
-                Agent entity = new Agent(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getLong(3),
-                        rs.getString(4),
-                        rs.getString(5));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -211,18 +181,12 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  AGENT_ID = ?");
+                        "  AGENT_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Agent entity = new Agent(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getLong(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -246,22 +210,25 @@ public class AgentRepositoryMSSQL implements AgentRepository {
                         "  dbo.AGENT\n" +
                         "WHERE\n" +
                         "  IS_DELETED = 0 AND\n" +
-                        "  PLATFORM_ID = ?");
+                        "  PLATFORM_ID = ?")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Agent entity = new Agent(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getLong(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
 
         return entities;
+    }
+
+    private Agent createEntity(ResultSet rs) throws SQLException {
+        return new Agent(
+                rs.getLong(1),
+                rs.getLong(2),
+                rs.getLong(3),
+                rs.getString(4),
+                rs.getString(5));
     }
 }

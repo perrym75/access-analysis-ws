@@ -33,13 +33,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  IS_DELETED = 0\n");
         ) {
             while (rs.next()) {
-                Platform entity = new Platform(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -77,13 +71,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
             st.setLong(2, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Platform entity = new Platform(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -116,13 +104,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Platform entity = new Platform(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -150,13 +132,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Platform entity = new Platform(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -184,13 +160,7 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
                         "  PARENT_ID IS NULL");
         ) {
             while (rs.next()) {
-                Platform entity = new Platform(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5));
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -216,17 +186,20 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Platform entity = new Platform(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            rs.getString(5));
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
 
         return null;
+    }
+
+    private Platform createEntity(ResultSet rs) throws SQLException {
+        return new Platform(
+                rs.getLong(1),
+                rs.getLong(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5));
     }
 }

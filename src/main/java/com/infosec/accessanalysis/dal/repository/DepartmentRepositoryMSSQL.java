@@ -22,15 +22,10 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE IS_DELETED = 0 ORDER BY DEPARTMENT_ID");
+                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE IS_DELETED = 0 ORDER BY DEPARTMENT_ID")
         ) {
             while (rs.next()) {
-                Department entity = new Department(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3));
-                loadChildObjects(entity);
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -43,18 +38,13 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement(";WITH DEP AS (SELECT DEPARTMENT_ID, PARENT_ID, NAME, ROW_NUMBER() OVER (ORDER BY DEPARTMENT_ID) as ROW_NUM FROM dbo.DEPARTMENT WHERE IS_DELETED = 0) SELECT * FROM DEP WHERE ROW_NUM >= ? AND ROW_NUM < ?");
+                PreparedStatement st = conn.prepareStatement(";WITH DEP AS (SELECT DEPARTMENT_ID, PARENT_ID, NAME, ROW_NUMBER() OVER (ORDER BY DEPARTMENT_ID) as ROW_NUM FROM dbo.DEPARTMENT WHERE IS_DELETED = 0) SELECT * FROM DEP WHERE ROW_NUM >= ? AND ROW_NUM < ?")
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Department entity = new Department(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3));
-                    loadChildObjects(entity);
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -72,17 +62,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID = ? AND IS_DELETED = 0");
+                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID = ? AND IS_DELETED = 0")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    Department entity = new Department(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3));
-                    loadChildObjects(entity);
-                    entities.add(entity);
+                    entities.add(createEntity(rs));
                 }
             }
         }
@@ -95,17 +80,12 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 //TODO: incorrect sql request
-                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID = ? AND IS_DELETED = 0");
+                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID = ? AND IS_DELETED = 0")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Department entity = new Department(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3));
-                    loadChildObjects(entity);
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
@@ -120,15 +100,10 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID IS NULL AND IS_DELETED = 0");
+                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID IS NULL AND IS_DELETED = 0")
         ) {
             while (rs.next()) {
-                Department entity = new Department(
-                        rs.getLong(1),
-                        rs.getLong(2),
-                        rs.getString(3));
-                loadChildObjects(entity);
-                entities.add(entity);
+                entities.add(createEntity(rs));
             }
         }
 
@@ -139,22 +114,27 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
     public Department findOne(long id) throws SQLException {
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE DEPARTMENT_ID = ? AND IS_DELETED = 0");
+                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE DEPARTMENT_ID = ? AND IS_DELETED = 0")
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
-                    Department entity = new Department(
-                            rs.getLong(1),
-                            rs.getLong(2),
-                            rs.getString(3));
-                    loadChildObjects(entity);
-                    return entity;
+                    return createEntity(rs);
                 }
             }
         }
 
         return null;
+    }
+
+    private Department createEntity(ResultSet rs) throws SQLException{
+        Department entity = new Department(
+                rs.getLong(1),
+                rs.getLong(2),
+                rs.getString(3));
+        loadChildObjects(entity);
+
+        return entity;
     }
 
     private void loadChildObjects(Department department) throws SQLException {
@@ -180,7 +160,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                         "\tpost.DEPARTMENT_ID = ? AND\n" +
                         "\tpost.IS_DELETED = 0 AND\n" +
                         "\tpers.IS_DELETED = 0 AND\n" +
-                        "\temp.IS_DELETED = 0\n");
+                        "\temp.IS_DELETED = 0\n")
         ) {
             st.setLong(1, department.getId());
             try (ResultSet rs = st.executeQuery()) {
