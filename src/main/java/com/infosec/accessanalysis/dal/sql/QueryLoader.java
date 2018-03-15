@@ -38,6 +38,7 @@ public class QueryLoader {
                 queries.put(key, result);
             }
         }
+
         return result;
     }
 }
