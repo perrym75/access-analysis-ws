@@ -3,9 +3,11 @@ package com.infosec.accessanalysis.dal.repository;
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Department;
 import com.infosec.accessanalysis.dal.model.Personage;
+import com.infosec.accessanalysis.dal.sql.QueryLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,13 +18,13 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
     private String url = Configuration.getDbUrl();
 
     @Override
-    public List<Department> findAll() throws SQLException {
+    public List<Department> findAll() throws SQLException, IOException {
         List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE IS_DELETED = 0 ORDER BY DEPARTMENT_ID")
+                ResultSet rs = st.executeQuery(QueryLoader.getInstance().getQueryGetAllDepartments())
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));

@@ -7,6 +7,7 @@ import com.infosec.accessanalysis.dal.repository.PlatformRepository;
 import com.infosec.accessanalysis.dal.repository.RepositoryFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,27 +20,27 @@ public class PlatformController {
 
     @GetMapping
     public List<Platform> getAll(@RequestParam(value="page", defaultValue = "0") long page,
-                                          @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException {
+                                          @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException, IOException {
         return platformRepository.findRangeOfAll(page * count, count);
     }
 
     @GetMapping("/{id}")
-    public Platform getOne(@PathVariable(value="id") long id) throws SQLException {
+    public Platform getOne(@PathVariable(value="id") long id) throws SQLException, IOException {
         return platformRepository.findOne(id);
     }
 
     @GetMapping("/children")
-    public List<Platform> getRoot() throws SQLException {
+    public List<Platform> getRoot() throws SQLException, IOException {
         return platformRepository.findRoot();
     }
 
     @GetMapping("/{id}/children")
-    public List<Platform> getChildren(@PathVariable(value="id") long id) throws SQLException {
+    public List<Platform> getChildren(@PathVariable(value="id") long id) throws SQLException, IOException {
         return platformRepository.findChildren(id);
     }
 
     @GetMapping("/{id}/agent")
-    public List<Agent> getPlatformAgents(@PathVariable(value="id") long id) throws SQLException {
+    public List<Agent> getPlatformAgents(@PathVariable(value="id") long id) throws SQLException, IOException {
         return agentRepository.findByPlatform(id);
     }
 }
