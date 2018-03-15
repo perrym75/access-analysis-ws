@@ -24,7 +24,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(QueryLoader.getInstance().getQueryGetAllDepartments())
+                ResultSet rs = st.executeQuery(QueryLoader.getInstance().getQuery("mssql", "selectAllDepartments"))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
