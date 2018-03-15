@@ -9,7 +9,7 @@ public class QueryLoader {
     private String queryGetAllDepartments = null;
 
     private QueryLoader() throws IOException {
-        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream("1.txt")) {
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream("sql/mssql/selectAllDepartments.sql")) {
             int length = is.available();
             byte[] bytes = new byte[length];
             is.read(bytes);

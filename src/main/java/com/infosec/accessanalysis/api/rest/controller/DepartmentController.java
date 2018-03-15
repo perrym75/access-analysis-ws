@@ -21,7 +21,7 @@ public class DepartmentController {
     @GetMapping
     public List<Department> getAll(@RequestParam(value="page", defaultValue = "0") long page,
                                               @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException, IOException {
-        return repository.findRangeOfAll(page * count, count);
+        return repository.findAll();
     }
 
     @GetMapping("/{id}")
