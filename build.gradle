@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        mavenCentral()
         maven { url "http://nexus.infosec.ru:8081/repository/maven-central/" }
     }
     dependencies {
@@ -19,7 +18,6 @@ jar {
 }
 
 repositories {
-    mavenCentral()
     maven { url "http://nexus.infosec.ru:8081/repository/maven-central/" }
 }
 
