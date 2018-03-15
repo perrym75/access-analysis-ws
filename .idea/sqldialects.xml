@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/AgentRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/DepartmentRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PlatformRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/ResourceRepositoryMSSQL.java" dialect="TSQL" />
-  </component>
-</project>
