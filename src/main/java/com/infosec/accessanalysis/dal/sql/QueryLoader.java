@@ -13,7 +13,7 @@ public class QueryLoader {
     private QueryLoader() {
     }
 
-    public static QueryLoader getInstance() throws IOException {
+    public static QueryLoader getInstance() {
         if (instance == null) {
             instance = new QueryLoader();
         }
@@ -22,7 +22,7 @@ public class QueryLoader {
     }
 
     public String getQuery(String dbProvider, String queryName) throws IOException {
-        String result = null;
+        String result;
         final String key = dbProvider +":" + queryName;
 
         if (queries.containsKey(key)) {

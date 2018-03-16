@@ -35,12 +35,13 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
     }
 
     @Override
-    public List<Department> findRangeOfAll(long from, long count) throws SQLException {
+    public List<Department> findRangeOfAll(long from, long count) throws SQLException, IOException {
         List<Department> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement(";WITH DEP AS (SELECT DEPARTMENT_ID, PARENT_ID, NAME, ROW_NUMBER() OVER (ORDER BY DEPARTMENT_ID) as ROW_NUM FROM dbo.DEPARTMENT WHERE IS_DELETED = 0) SELECT * FROM DEP WHERE ROW_NUM >= ? AND ROW_NUM < ?")
+                PreparedStatement st = conn.prepareStatement(
+                        QueryLoader.getInstance().getQuery("mssql", "selectRangeOfDepartments"))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
