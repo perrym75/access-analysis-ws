@@ -1,0 +1,19 @@
+;WITH
+    DEP
+AS
+  (SELECT
+     DEPARTMENT_ID
+     , PARENT_ID
+     , NAME
+     , ROW_NUMBER() OVER (ORDER BY DEPARTMENT_ID) as ROW_NUM
+   FROM
+     dbo.DEPARTMENT
+   WHERE
+     IS_DELETED = 0)
+SELECT
+  *
+FROM
+  DEP
+WHERE
+  ROW_NUM >= ? AND
+  ROW_NUM < ?

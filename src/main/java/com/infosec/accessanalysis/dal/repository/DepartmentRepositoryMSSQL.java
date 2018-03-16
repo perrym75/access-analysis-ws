@@ -3,7 +3,7 @@ package com.infosec.accessanalysis.dal.repository;
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Department;
 import com.infosec.accessanalysis.dal.model.Personage;
-import com.infosec.accessanalysis.dal.sql.QueryLoader;
+import com.infosec.accessanalysis.dal.sql.TextResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +17,10 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private String url = Configuration.getDbUrl();
 
+    private String getQueryResourceName(String query) {
+        return Configuration.getSqlQueryResourcePrefix() + "department/" + query + ".sql";
+    }
+
     @Override
     public List<Department> findAll() throws SQLException, IOException {
         List<Department> entities = new LinkedList<>();
@@ -24,7 +28,8 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(QueryLoader.getInstance().getQuery("mssql", "selectAllDepartments"))
+                ResultSet rs = st.executeQuery(TextResourceLoader.loadResource(
+                        getQueryResourceName("selectAllDepartments")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -41,7 +46,7 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        QueryLoader.getInstance().getQuery("mssql", "selectRangeOfDepartments"))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectRangeOfDepartments")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -76,24 +81,6 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
         }
 
         return entities;
-    }
-
-    @Override
-    public Department findParent(long id) throws SQLException {
-        try (
-                Connection conn = DriverManager.getConnection(url);
-                //TODO: incorrect sql request
-                PreparedStatement st = conn.prepareStatement("SELECT DEPARTMENT_ID, PARENT_ID, NAME FROM dbo.DEPARTMENT WHERE PARENT_ID = ? AND IS_DELETED = 0")
-        ) {
-            st.setLong(1, id);
-            try (ResultSet rs = st.executeQuery()) {
-                if (rs.next()) {
-                    return createEntity(rs);
-                }
-            }
-        }
-
-        return null;
     }
 
     @Override

@@ -113,34 +113,6 @@ public class PlatformRepositoryMSSQL implements PlatformRepository {
     }
 
     @Override
-    public Platform findParent(long id) throws SQLException {
-        try (
-                Connection conn = DriverManager.getConnection(url);
-                //TODO: incorrect sql request
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  PLATFORM_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , NAME\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.PLATFORM\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?")
-        ) {
-            st.setLong(1, id);
-            try (ResultSet rs = st.executeQuery()) {
-                if (rs.next()) {
-                    return createEntity(rs);
-                }
-            }
-        }
-
-        return null;
-    }
-
-    @Override
     public List<Platform> findRoot() throws SQLException {
         List<Platform> entities = new LinkedList<>();
 

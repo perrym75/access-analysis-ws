@@ -21,12 +21,12 @@ public class DepartmentController {
     @GetMapping
     public List<Department> getAll(@RequestParam(value="page", defaultValue = "0") long page,
                                               @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException, IOException {
-        return repository.findAll();
+        return repository.findRangeOfAll(page * count, count);
     }
 
     @GetMapping("/{id}")
-    public Department getOne(@PathVariable(value="id") long departmentId) throws SQLException, IOException {
-        return repository.findOne(departmentId);
+    public Department getOne(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return repository.findOne(id);
     }
 
     @GetMapping("/children")
@@ -35,7 +35,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}/children")
-    public List<Department> getChildren(@PathVariable(value="id") long parentId) throws SQLException, IOException {
-        return repository.findChildren(parentId);
+    public List<Department> getChildren(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return repository.findChildren(id);
     }
 }
