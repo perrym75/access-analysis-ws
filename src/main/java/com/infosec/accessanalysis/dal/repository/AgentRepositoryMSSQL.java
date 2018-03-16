@@ -2,9 +2,11 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Agent;
+import com.infosec.accessanalysis.dal.sql.TextResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +15,10 @@ public class AgentRepositoryMSSQL implements AgentRepository {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private String url = Configuration.getDbUrl();
+
+    private String getQueryResourceName(String query) {
+        return Configuration.getSqlQueryResourcePrefix() + "agent/" + query + ".sql";
+    }
 
     @Override
     public List<Agent> findAll() throws SQLException {
@@ -167,22 +173,13 @@ public class AgentRepositoryMSSQL implements AgentRepository {
     }
 
     @Override
-    public List<Agent> findByPlatform(long id) throws SQLException {
+    public List<Agent> findByPlatform(long id) throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  AGENT_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , PLATFORM_ID\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.AGENT\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PLATFORM_ID = ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceLoader.loadResource(getQueryResourceName("selectAgentsByPlatform")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

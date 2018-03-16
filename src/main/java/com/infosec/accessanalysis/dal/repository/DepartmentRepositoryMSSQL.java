@@ -161,7 +161,8 @@ public class DepartmentRepositoryMSSQL implements DepartmentRepository {
                             rs.getString(2),
                             rs.getString(3),
                             rs.getString(4),
-                            rs.getString(5));
+                            rs.getString(5),
+                            rs.getLong(6));
                     employees.add(entity);
                 }
             }

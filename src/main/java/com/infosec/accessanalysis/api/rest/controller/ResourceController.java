@@ -1,6 +1,8 @@
 package com.infosec.accessanalysis.api.rest.controller;
 
+import com.infosec.accessanalysis.dal.model.Personage;
 import com.infosec.accessanalysis.dal.model.Resource;
+import com.infosec.accessanalysis.dal.repository.PersonageRepository;
 import com.infosec.accessanalysis.dal.repository.RepositoryFactory;
 import com.infosec.accessanalysis.dal.repository.ResourceRepository;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.List;
 public class ResourceController {
 
     private ResourceRepository repository = (ResourceRepository) RepositoryFactory.getRepository("mssql:resource");
+    private PersonageRepository personageRepository = (PersonageRepository) RepositoryFactory.getRepository("mssql:personage");
 
     @GetMapping
     public List<Resource> getAll(@RequestParam(value="page", defaultValue = "0") long page,
@@ -22,8 +25,8 @@ public class ResourceController {
     }
 
     @GetMapping("/{id}")
-    public Resource getOne(@PathVariable(value="id") long departmentId) throws SQLException, IOException {
-        return repository.findOne(departmentId);
+    public Resource getOne(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return repository.findOne(id);
     }
 
     @GetMapping("/children")
@@ -32,7 +35,12 @@ public class ResourceController {
     }
 
     @GetMapping("/{id}/children")
-    public List<Resource> getChildren(@PathVariable(value="id") long parentId) throws SQLException, IOException {
-        return repository.findChildren(parentId);
+    public List<Resource> getChildren(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return repository.findChildren(id);
+    }
+
+    @GetMapping("/{id}/personage")
+    public List<Personage> getResourcePersonages(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return personageRepository.findByResource(id);
     }
 }

@@ -16,6 +16,7 @@ public class Application {
         RepositoryFactory.registerRepository("mssql:resource", ResourceRepositoryMSSQL.class);
         RepositoryFactory.registerRepository("mssql:platform", PlatformRepositoryMSSQL.class);
         RepositoryFactory.registerRepository("mssql:agent", AgentRepositoryMSSQL.class);
+        RepositoryFactory.registerRepository("mssql:personage", PersonageRepositoryMSSQL.class);
 
         SpringApplication.run(Application.class, args);
     }

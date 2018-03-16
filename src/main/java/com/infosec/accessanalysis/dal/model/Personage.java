@@ -6,13 +6,15 @@ public class Personage {
     private String secondName;
     private String lastName;
     private String email;
+    private long departmentId;
 
-    public Personage(long id, String firstName, String secondName, String lastName, String email) {
+    public Personage(long id, String firstName, String secondName, String lastName, String email, long departmentId) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.email = email;
+        this.departmentId = departmentId;
     }
 
     public long getId() {
@@ -53,5 +55,13 @@ public class Personage {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
     }
 }
