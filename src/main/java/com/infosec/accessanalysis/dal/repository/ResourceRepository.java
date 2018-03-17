@@ -16,7 +16,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String url = Configuration.getDbUrl();
 
-    private String getQueryResourceName(String query) {
+    private static String getQueryResourceName(String query) {
         return Configuration.getSqlQueryResourcePrefix() + "resource/" + query + ".sql";
     }
 

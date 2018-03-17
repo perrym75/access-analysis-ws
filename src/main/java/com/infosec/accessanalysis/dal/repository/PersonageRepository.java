@@ -15,7 +15,7 @@ public class PersonageRepository implements Repository<Personage> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String dbUrl = Configuration.getDbUrl();
 
-    private String getQueryResourceName(String query) {
+    private static String getQueryResourceName(String query) {
         return Configuration.getSqlQueryResourcePrefix() + "personage/" + query + ".sql";
     }
 

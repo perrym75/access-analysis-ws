@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/1.0/agent")
+@RequestMapping("/api/1.0/personage")
 public class PersonageController {
 
     private final PersonageRepository personageRepository = new PersonageRepository();

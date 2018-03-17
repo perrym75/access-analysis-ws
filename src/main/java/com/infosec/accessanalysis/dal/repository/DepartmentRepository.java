@@ -17,7 +17,7 @@ public class DepartmentRepository implements HierarchicalRepository<Department> 
     private final String url = Configuration.getDbUrl();
     private final PersonageRepository personageRepository = new PersonageRepository();
 
-    private String getQueryResourceName(String query) {
+    private static String getQueryResourceName(String query) {
         return Configuration.getSqlQueryResourcePrefix() + "department/" + query + ".sql";
     }
 
