@@ -2,9 +2,7 @@ package com.infosec.accessanalysis.api.rest.controller;
 
 import com.infosec.accessanalysis.dal.model.Agent;
 import com.infosec.accessanalysis.dal.model.Resource;
-import com.infosec.accessanalysis.dal.repository.AgentRepository;
-import com.infosec.accessanalysis.dal.repository.RepositoryFactory;
-import com.infosec.accessanalysis.dal.repository.ResourceRepository;
+import com.infosec.accessanalysis.dal.repository.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -15,8 +13,8 @@ import java.util.List;
 @RequestMapping("/api/1.0/agent")
 public class AgentController {
 
-    private AgentRepository agentRepository = (AgentRepository) RepositoryFactory.getRepository("mssql:agent");
-    private ResourceRepository resourceRepository = (ResourceRepository) RepositoryFactory.getRepository("mssql:resource");
+    private final AgentRepository agentRepository = new AgentRepository();
+    private final ResourceRepository resourceRepository = new ResourceRepository();
 
     @GetMapping
     public List<Agent> getAll(@RequestParam(value="page", defaultValue = "0") long page,

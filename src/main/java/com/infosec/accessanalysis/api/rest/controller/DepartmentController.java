@@ -2,21 +2,17 @@ package com.infosec.accessanalysis.api.rest.controller;
 
 import com.infosec.accessanalysis.dal.model.Department;
 import com.infosec.accessanalysis.dal.repository.DepartmentRepository;
-import com.infosec.accessanalysis.dal.repository.RepositoryFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/api/1.0/department")
 public class DepartmentController {
 
-    private final AtomicLong counter = new AtomicLong();
-
-    private DepartmentRepository repository = (DepartmentRepository) RepositoryFactory.getRepository("mssql:department");
+    private final DepartmentRepository repository = new DepartmentRepository();
 
     @GetMapping
     public List<Department> getAll(@RequestParam(value="page", defaultValue = "0") long page,

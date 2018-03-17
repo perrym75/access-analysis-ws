@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.net.URI;
 
 public class Configuration {
-    private static String dburl;
+    private final static String dburl;
     private static String sqlQueryResourcePrefix;
 
     static {

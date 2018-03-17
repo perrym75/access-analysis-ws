@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/AgentRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/DepartmentRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PersonageRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PlatformRepositoryMSSQL.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/ResourceRepositoryMSSQL.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/AgentRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/DepartmentRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PersonageRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PlatformRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/ResourceRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgentsByPlatform.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/department/selectAllDepartments.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/department/selectChildDepartments.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/department/selectDepartment.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/department/selectRangeOfDepartments.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/department/selectRootDepartments.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectAllPersonages.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonage.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonageByResource.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonagesByDepartment.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectAllResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectChildResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectRangeOfResources.sql" dialect="TSQL" />

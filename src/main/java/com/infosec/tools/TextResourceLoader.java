@@ -1,4 +1,4 @@
-package com.infosec.accessanalysis.dal.sql;
+package com.infosec.tools;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,7 @@ import java.util.Map;
 
 public class TextResourceLoader {
 
-    private static TextResourceLoader instance = null;
-    private static Map<String, String> queries = new HashMap<>();
+    private final static Map<String, String> queries = new HashMap<>();
 
     private TextResourceLoader() {
     }
@@ -21,9 +20,8 @@ public class TextResourceLoader {
             try (InputStream is = TextResourceLoader.class.getClassLoader().getResourceAsStream(resourceName)) {
                 int length = is.available();
                 byte[] bytes = new byte[length];
-                is.read(bytes);
 
-                result = new String(bytes, "UTF-8");
+                result = new String(bytes, 0, is.read(bytes), "UTF-8");
                 queries.put(resourceName, result);
             }
         }
