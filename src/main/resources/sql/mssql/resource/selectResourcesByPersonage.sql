@@ -12,7 +12,7 @@ AS
       , SECURITY_PRINCIPAL_ID
       , SECURITY_PRINCIPAL_ID
       , 0 LEV
-      , cast( ':' + cast( SECURITY_PRINCIPAL_ID as nvarchar ) + ':' as nvarchar( max ) ) AS SP_PATH
+      , CAST(':' + CAST( SECURITY_PRINCIPAL_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX) ) AS SP_PATH
     FROM
       USER_ACCOUNT
     UNION ALL

@@ -12,18 +12,18 @@ AS
       , SECURITY_PRINCIPAL_ID
       , SECURITY_PRINCIPAL_ID
       , 0 LEV
-      , cast( ':' + cast( SECURITY_PRINCIPAL_ID as nvarchar ) + ':' as nvarchar( max ) ) AS SP_PATH
+      , CAST(':' + CAST(SECURITY_PRINCIPAL_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX)) AS SP_PATH
     FROM
-      USER_ACCOUNT
+      dbo.USER_ACCOUNT
     UNION ALL
       SELECT
         ts.ROOT_ID
         , sp.PARENT_ID
         , sp.CHILD_ID
         , ts.LEV + 1
-        , CAST(ts.SP_PATH + CAST(sp.PARENT_ID as NVARCHAR) + ':' AS NVARCHAR(MAX))
+        , CAST(ts.SP_PATH + CAST(sp.PARENT_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX))
       FROM
-        SP_RELATION sp
+        dbo.SP_RELATION sp
         INNER JOIN
         TreeSP ts
           ON
