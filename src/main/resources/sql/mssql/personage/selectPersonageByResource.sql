@@ -38,6 +38,7 @@ SELECT
   , emp.LAST_NAME
   , pers.EMAIL
   , post.DEPARTMENT_ID
+  , 1 AS STATUS
 FROM
   dbo.[RESOURCE] res
 INNER JOIN

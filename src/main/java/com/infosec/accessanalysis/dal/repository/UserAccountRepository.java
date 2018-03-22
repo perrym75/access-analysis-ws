@@ -1,7 +1,7 @@
 package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
-import com.infosec.accessanalysis.dal.model.Personage;
+import com.infosec.accessanalysis.dal.model.UserAccount;
 import com.infosec.tools.TextResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,20 +11,20 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PersonageRepository implements Repository<Personage> {
+public class UserAccountRepository implements Repository<UserAccount> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String dbUrl = Configuration.getDbUrl();
 
     private static String getQueryResourceName(String query) {
-        return Configuration.getSqlQueryResourcePrefix() + "personage/" + query + ".sql";
+        return Configuration.getSqlQueryResourcePrefix() + "useraccount/" + query + ".sql";
     }
 
     @Override
-    public Personage findOne(long id) throws SQLException, IOException {
+    public UserAccount findOne(long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonage")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccount")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -38,14 +38,14 @@ public class PersonageRepository implements Repository<Personage> {
     }
 
     @Override
-    public List<Personage> findAll() throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public List<UserAccount> findAll() throws SQLException, IOException {
+        List<UserAccount> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllPersonages")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectAllUserAccounts")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -56,17 +56,17 @@ public class PersonageRepository implements Repository<Personage> {
     }
 
     @Override
-    public List<Personage> findRangeOfAll(long from, long count) throws SQLException, IOException {
+    public List<UserAccount> findRangeOfAll(long from, long count) throws SQLException, IOException {
         return null;
     }
 
-    public List<Personage> findByResource(long id) throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public List<UserAccount> findByResource(long id) throws SQLException, IOException {
+        List<UserAccount> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonageByResource")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccountsByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -79,13 +79,13 @@ public class PersonageRepository implements Repository<Personage> {
         return entities;
     }
 
-    public List<Personage> findByDepartment(long id) throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public List<UserAccount> findByUnit(long id) throws SQLException, IOException {
+        List<UserAccount> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonagesByDepartment")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccountsByUnit")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -98,14 +98,11 @@ public class PersonageRepository implements Repository<Personage> {
         return entities;
     }
 
-    private Personage createEntity(ResultSet rs) throws SQLException {
-        return new Personage(
+    private UserAccount createEntity(ResultSet rs) throws SQLException {
+        return new UserAccount(
                 rs.getLong(1),
                 rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getString(5),
-                rs.getLong(6),
-                rs.getInt(7));
+                rs.getLong(3),
+                rs.getInt(4));
     }
 }

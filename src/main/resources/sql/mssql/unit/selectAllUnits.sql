@@ -1,0 +1,7 @@
+SELECT
+  u.UNIT_ID
+  , u.PARENT_ID
+  , u.DISPLAY_NAME
+  , u.AGENT_ID
+FROM
+  dbo.UNIT u

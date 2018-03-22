@@ -7,14 +7,17 @@ public class Personage {
     private String lastName;
     private String email;
     private long departmentId;
+    private int status;
 
-    public Personage(long id, String firstName, String secondName, String lastName, String email, long departmentId) {
+    public Personage(long id, String firstName, String secondName, String lastName, String email, long departmentId,
+                     int status) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.email = email;
         this.departmentId = departmentId;
+        this.status = status;
     }
 
     public long getId() {
@@ -63,5 +66,13 @@ public class Personage {
 
     public void setDepartmentId(long departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -21,7 +21,7 @@ AS
         , sp.PARENT_ID
         , sp.CHILD_ID
         , ts.LEV + 1
-        , CAST(ts.SP_PATH + CAST(sp.PARENT_ID as NVARCHAR) + ':' AS NVARCHAR(MAX))
+        , CAST(ts.SP_PATH + CAST(sp.PARENT_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX))
       FROM
         SP_RELATION sp
         INNER JOIN

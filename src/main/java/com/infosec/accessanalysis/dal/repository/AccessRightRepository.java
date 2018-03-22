@@ -1,30 +1,32 @@
 package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
-import com.infosec.accessanalysis.dal.model.Personage;
+import com.infosec.accessanalysis.dal.model.AccessRight;
 import com.infosec.tools.TextResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
-public class PersonageRepository implements Repository<Personage> {
+public class AccessRightRepository implements Repository<AccessRight> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String dbUrl = Configuration.getDbUrl();
 
     private static String getQueryResourceName(String query) {
-        return Configuration.getSqlQueryResourcePrefix() + "personage/" + query + ".sql";
+        return Configuration.getSqlQueryResourcePrefix() + "accessright/" + query + ".sql";
     }
 
     @Override
-    public Personage findOne(long id) throws SQLException, IOException {
+    public AccessRight findOne(long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonage")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectAccessRight")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -38,14 +40,14 @@ public class PersonageRepository implements Repository<Personage> {
     }
 
     @Override
-    public List<Personage> findAll() throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public List<AccessRight> findAll() throws SQLException, IOException {
+        List<AccessRight> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllPersonages")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectAllAccessRights")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -56,19 +58,21 @@ public class PersonageRepository implements Repository<Personage> {
     }
 
     @Override
-    public List<Personage> findRangeOfAll(long from, long count) throws SQLException, IOException {
+    public List<AccessRight> findRangeOfAll(long from, long count) throws SQLException, IOException {
         return null;
     }
 
-    public List<Personage> findByResource(long id) throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public Set<AccessRight> findByPersonageAndResourceViaSP(long personageId, long resourceId)
+            throws SQLException, IOException {
+        Set<AccessRight> entities = new HashSet<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonageByResource")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectResourceAccessViaSP")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, personageId);
+            st.setLong(1, resourceId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -79,15 +83,17 @@ public class PersonageRepository implements Repository<Personage> {
         return entities;
     }
 
-    public List<Personage> findByDepartment(long id) throws SQLException, IOException {
-        List<Personage> entities = new LinkedList<>();
+    public Set<AccessRight> findByPersonageAndResourceViaRoles(long personageId, long resourceId)
+            throws SQLException, IOException {
+        Set<AccessRight> entities = new HashSet<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonagesByDepartment")))
+                        TextResourceLoader.loadResource(getQueryResourceName("selectResourceAccessViaRoles")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, personageId);
+            st.setLong(1, resourceId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -97,15 +103,9 @@ public class PersonageRepository implements Repository<Personage> {
 
         return entities;
     }
-
-    private Personage createEntity(ResultSet rs) throws SQLException {
-        return new Personage(
+    private AccessRight createEntity(ResultSet rs) throws SQLException {
+        return new AccessRight(
                 rs.getLong(1),
-                rs.getString(2),
-                rs.getString(3),
-                rs.getString(4),
-                rs.getString(5),
-                rs.getLong(6),
-                rs.getInt(7));
+                rs.getString(2));
     }
 }

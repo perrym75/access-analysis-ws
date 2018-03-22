@@ -2,6 +2,7 @@ package com.infosec.accessanalysis.api.rest.controller;
 
 import com.infosec.accessanalysis.dal.model.Agent;
 import com.infosec.accessanalysis.dal.model.Resource;
+import com.infosec.accessanalysis.dal.model.Unit;
 import com.infosec.accessanalysis.dal.repository.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ public class AgentController {
 
     private final AgentRepository agentRepository = new AgentRepository();
     private final ResourceRepository resourceRepository = new ResourceRepository();
+    private final UnitRepository unitRepository = new UnitRepository();
 
     @GetMapping
     public List<Agent> getAll(@RequestParam(value="page", defaultValue = "0") long page,
@@ -40,5 +42,10 @@ public class AgentController {
     @GetMapping("/{id}/resource")
     public List<Resource> getAgentResources(@PathVariable(value="id") long id) throws SQLException, IOException {
         return resourceRepository.findByAgent(id);
+    }
+
+    @GetMapping("/{id}/unit")
+    public List<Unit> getAgentUnits(@PathVariable(value="id") long id) throws SQLException, IOException {
+        return unitRepository.findByAgent(id);
     }
 }
