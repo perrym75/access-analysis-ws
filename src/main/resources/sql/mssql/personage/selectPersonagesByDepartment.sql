@@ -9,7 +9,8 @@ SELECT
   (
     CASE
     (
-      SELECT COUNT(*)
+      SELECT
+        COUNT(*)
       FROM
         dbo.USER_ACCOUNT ua
       WHERE
