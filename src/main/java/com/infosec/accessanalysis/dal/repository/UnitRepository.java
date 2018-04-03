@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Unit;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(TextResourceLoader.loadResource(
+                ResultSet rs = st.executeQuery(TextResourceReader.readResource(
                         getQueryResourceName("selectAllUnits")))
         ) {
             while (rs.next()) {
@@ -46,7 +46,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectRangeOfUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfUnits")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -71,7 +71,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectChildUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectChildUnits")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -92,7 +92,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectRootUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRootUnits")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -107,7 +107,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectUnit")))
+                        TextResourceReader.readResource(getQueryResourceName("selectUnit")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -126,7 +126,7 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectUnitsByAgent")))
+                        TextResourceReader.readResource(getQueryResourceName("selectUnitsByAgent")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Personage;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonage")))
+                        TextResourceReader.readResource(getQueryResourceName("selectPersonage")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class PersonageRepository implements Repository<Personage> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllPersonages")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAllPersonages")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -66,7 +66,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonageByResource")))
+                        TextResourceReader.readResource(getQueryResourceName("selectPersonageByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -85,7 +85,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectPersonagesByDepartment")))
+                        TextResourceReader.readResource(getQueryResourceName("selectPersonagesByDepartment")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

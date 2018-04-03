@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.AccessRight;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAccessRight")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAccessRight")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -47,7 +47,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllAccessRights")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAllAccessRights")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -69,7 +69,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectResourceAccessViaSP")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaSP")))
         ) {
             st.setLong(1, personageId);
             st.setLong(1, resourceId);
@@ -90,7 +90,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectResourceAccessViaRoles")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaRoles")))
         ) {
             st.setLong(1, personageId);
             st.setLong(1, resourceId);

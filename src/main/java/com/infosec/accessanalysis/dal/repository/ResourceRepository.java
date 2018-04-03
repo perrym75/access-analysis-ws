@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Resource;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllResources")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAllResources")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -45,7 +45,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectRangeOfResources")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfResources")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -70,7 +70,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectChildResources")))
+                        TextResourceReader.readResource(getQueryResourceName("selectChildResources")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -91,7 +91,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectRootResources")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRootResources")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -106,7 +106,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectResource")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -125,7 +125,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectResourcesByAgent")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByAgent")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -144,7 +144,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectResourcesByPersonage")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByPersonage")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

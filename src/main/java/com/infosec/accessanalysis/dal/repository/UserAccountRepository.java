@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.UserAccount;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccount")))
+                        TextResourceReader.readResource(getQueryResourceName("selectUserAccount")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAllUserAccounts")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAllUserAccounts")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -66,7 +66,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccountsByResource")))
+                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -85,7 +85,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectUserAccountsByUnit")))
+                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByUnit")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

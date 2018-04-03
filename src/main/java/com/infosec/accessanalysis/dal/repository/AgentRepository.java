@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dal.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dal.model.Agent;
-import com.infosec.tools.TextResourceLoader;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,22 +21,14 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
     }
 
     @Override
-    public List<Agent> findAll() throws SQLException {
+    public List<Agent> findAll() throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT\n" +
-                        "  AGENT_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , PLATFORM_ID\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.AGENT\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0")
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectAllAgents")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -47,31 +39,13 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
     }
 
     @Override
-    public List<Agent> findRangeOfAll(long from, long count) throws SQLException {
+    public List<Agent> findRangeOfAll(long from, long count) throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement(";WITH\n" +
-                        "    AGENT\n" +
-                        "AS\n" +
-                        "  (SELECT\n" +
-                        "     AGENT_ID\n" +
-                        "     , PARENT_ID\n" +
-                        "     , PLATFORM_ID\n" +
-                        "     , DISPLAY_NAME\n" +
-                        "     , DESCRIPTION\n" +
-                        "    , ROW_NUMBER() OVER (ORDER BY AGENT_ID) AS ROW_NUM\n" +
-                        "  FROM\n" +
-                        "    dbo.[AGENT]\n" +
-                        "  WHERE\n" +
-                        "    IS_DELETED = 0)\n" +
-                        "SELECT\n" +
-                        "  *\n" +
-                        "FROM\n" +
-                        "  AGENT\n" +
-                        "WHERE\n" +
-                        "  ROW_NUM >= ? AND ROW_NUM < ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfAgents")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -90,22 +64,13 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
     }
 
     @Override
-    public List<Agent> findChildren(long id) throws SQLException {
+    public List<Agent> findChildren(long id) throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  AGENT_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , PLATFORM_ID\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.AGENT\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectChildAgents")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -119,23 +84,14 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
     }
 
     @Override
-    public List<Agent> findRoot() throws SQLException {
+    public List<Agent> findRoot() throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT\n" +
-                        "  AGENT_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , PLATFORM_ID\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.AGENT\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID IS NULL")
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectRootAgents")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -146,20 +102,11 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
     }
 
     @Override
-    public Agent findOne(long id) throws SQLException {
+    public Agent findOne(long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  AGENT_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , PLATFORM_ID\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.AGENT\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  AGENT_ID = ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectAgent")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -178,7 +125,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceLoader.loadResource(getQueryResourceName("selectAgentsByPlatform")))
+                        TextResourceReader.readResource(getQueryResourceName("selectAgentsByPlatform")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

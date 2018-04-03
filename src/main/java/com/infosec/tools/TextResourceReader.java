@@ -5,19 +5,19 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TextResourceLoader {
+public class TextResourceReader {
 
     private final static Map<String, String> queries = new HashMap<>();
 
-    private TextResourceLoader() {
+    private TextResourceReader() {
     }
 
-    public static String loadResource(String resourceName) throws IOException {
+    public static String readResource(String resourceName) throws IOException {
         String result;
         if (queries.containsKey(resourceName)) {
             result = queries.get(resourceName);
         } else {
-            try (InputStream is = TextResourceLoader.class.getClassLoader().getResourceAsStream(resourceName)) {
+            try (InputStream is = TextResourceReader.class.getClassLoader().getResourceAsStream(resourceName)) {
                 int length = is.available();
                 byte[] bytes = new byte[length];
 
