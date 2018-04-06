@@ -1,4 +1,4 @@
-package com.infosec.accessanalysis.dal.model;
+package com.infosec.accessanalysis.dao.model;
 
 public class AccessRight {
     private long id;

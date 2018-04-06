@@ -1,7 +1,7 @@
-package com.infosec.accessanalysis.dal.repository;
+package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
-import com.infosec.accessanalysis.dal.model.Unit;
+import com.infosec.accessanalysis.dao.model.Resource;
 import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,25 +11,24 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UnitRepository implements HierarchicalRepository<Unit> {
+public class ResourceRepository implements HierarchicalRepository<Resource> {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String url = Configuration.getDbUrl();
-    private final UserAccountRepository userAccountRepository = new UserAccountRepository();
 
     private static String getQueryResourceName(String query) {
-        return Configuration.getSqlQueryResourcePrefix() + "unit/" + query + ".sql";
+        return Configuration.getSqlQueryResourcePrefix() + "resource/" + query + ".sql";
     }
 
     @Override
-    public List<Unit> findAll() throws SQLException, IOException {
-        List<Unit> entities = new LinkedList<>();
+    public List<Resource> findAll() throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(TextResourceReader.readResource(
-                        getQueryResourceName("selectAllUnits")))
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectAllResources")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -40,13 +39,13 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
     }
 
     @Override
-    public List<Unit> findRangeOfAll(long from, long count) throws SQLException, IOException {
-        List<Unit> entities = new LinkedList<>();
+    public List<Resource> findRangeOfAll(long from, long count) throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfResources")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -65,13 +64,13 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
     }
 
     @Override
-    public List<Unit> findChildren(long id) throws SQLException, IOException {
-        List<Unit> entities = new LinkedList<>();
+    public List<Resource> findChildren(long id) throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectChildUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectChildResources")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -85,14 +84,14 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
     }
 
     @Override
-    public List<Unit> findRoot() throws SQLException, IOException {
-        List<Unit> entities = new LinkedList<>();
+    public List<Resource> findRoot() throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectRootUnits")))
+                        TextResourceReader.readResource(getQueryResourceName("selectRootResources")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -103,11 +102,11 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
     }
 
     @Override
-    public Unit findOne(long id) throws SQLException, IOException {
+    public Resource findOne(long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUnit")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -120,13 +119,13 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         return null;
     }
 
-    public List<Unit> findByAgent(long id) throws SQLException, IOException {
-        List<Unit> entities = new LinkedList<>();
+    public List<Resource> findByAgent(long id) throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUnitsByAgent")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByAgent")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -139,13 +138,32 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         return entities;
     }
 
-    private Unit createEntity(ResultSet rs) throws SQLException, IOException{
-        Unit entity = new Unit(
+    public List<Resource> findByPersonage(long id) throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByPersonage")))
+        ) {
+            st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
+    private Resource createEntity(ResultSet rs) throws SQLException {
+        return new Resource(
                 rs.getLong(1),
                 rs.getLong(2),
-                rs.getString(3));
-        entity.setUserAccounts(userAccountRepository.findByUnit(entity.getId()));
-
-        return entity;
+                rs.getString(3),
+                rs.getString(4),
+                rs.getString(5),
+                rs.getLong(6));
     }
 }

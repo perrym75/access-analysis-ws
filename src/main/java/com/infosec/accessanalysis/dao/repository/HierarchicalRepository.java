@@ -1,4 +1,4 @@
-package com.infosec.accessanalysis.dal.repository;
+package com.infosec.accessanalysis.dao.repository;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,9 +1,9 @@
 package com.infosec.accessanalysis.api.rest.controller;
 
-import com.infosec.accessanalysis.dal.model.Agent;
-import com.infosec.accessanalysis.dal.model.Resource;
-import com.infosec.accessanalysis.dal.model.Unit;
-import com.infosec.accessanalysis.dal.repository.*;
+import com.infosec.accessanalysis.dao.model.Agent;
+import com.infosec.accessanalysis.dao.model.Resource;
+import com.infosec.accessanalysis.dao.model.Unit;
+import com.infosec.accessanalysis.dao.repository.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

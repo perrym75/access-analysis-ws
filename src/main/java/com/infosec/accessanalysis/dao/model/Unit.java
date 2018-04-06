@@ -1,4 +1,4 @@
-package com.infosec.accessanalysis.dal.model;
+package com.infosec.accessanalysis.dao.model;
 
 import java.util.LinkedList;
 import java.util.List;

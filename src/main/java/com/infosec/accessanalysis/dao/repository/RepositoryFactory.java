@@ -1,4 +1,4 @@
-package com.infosec.accessanalysis.dal.repository;
+package com.infosec.accessanalysis.dao.repository;
 
 import java.util.Map;
 import java.util.HashMap;

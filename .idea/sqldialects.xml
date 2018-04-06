@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/AgentRepository.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/DepartmentRepository.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PersonageRepository.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/PlatformRepository.java" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dal/repository/ResourceRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dao/repository/AgentRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dao/repository/DepartmentRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dao/repository/PersonageRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dao/repository/PlatformRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/infosec/accessanalysis/dao/repository/ResourceRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/accessright/selectResourceAccessViaRoles.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/accessright/selectResourceAccessViaSP.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgent.sql" dialect="TSQL" />

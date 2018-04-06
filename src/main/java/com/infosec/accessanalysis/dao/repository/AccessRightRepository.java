@@ -1,7 +1,7 @@
-package com.infosec.accessanalysis.dal.repository;
+package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
-import com.infosec.accessanalysis.dal.model.AccessRight;
+import com.infosec.accessanalysis.dao.model.AccessRight;
 import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
