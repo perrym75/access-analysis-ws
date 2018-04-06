@@ -23,6 +23,11 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonage.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonageByResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonagesByDepartment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectAllPlatforms.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectChildPlatforms.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectPlatform.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectRangeOfPlatforms.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectRootPlatforms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectAllResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectChildResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectRangeOfResources.sql" dialect="TSQL" />

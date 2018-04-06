@@ -2,9 +2,11 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Platform;
+import com.infosec.tools.TextResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,23 +16,19 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String url = Configuration.getDbUrl();
 
+    private static String getQueryResourceName(String query) {
+        return Configuration.getSqlQueryResourcePrefix() + "platform/" + query + ".sql";
+    }
+
     @Override
-    public List<Platform> findAll() throws SQLException {
+    public List<Platform> findAll() throws SQLException, IOException {
         List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT\n" +
-                        "  PLATFORM_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , NAME\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.PLATFORM\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0\n")
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectAllPlatforms")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -41,31 +39,13 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
     }
 
     @Override
-    public List<Platform> findRangeOfAll(long from, long count) throws SQLException {
+    public List<Platform> findRangeOfAll(long from, long count) throws SQLException, IOException {
         List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement(";WITH\n" +
-                        "    PLAT\n" +
-                        "AS\n" +
-                        "  (SELECT\n" +
-                        "     PLATFORM_ID\n" +
-                        "     , PARENT_ID\n" +
-                        "     , NAME\n" +
-                        "     , DISPLAY_NAME\n" +
-                        "     , DESCRIPTION\n" +
-                        "    , ROW_NUMBER() OVER (ORDER BY PLATFORM_ID) AS ROW_NUM\n" +
-                        "  FROM\n" +
-                        "    dbo.[PLATFORM]\n" +
-                        "  WHERE\n" +
-                        "    IS_DELETED = 0)\n" +
-                        "SELECT\n" +
-                        "  *\n" +
-                        "FROM\n" +
-                        "  PLAT\n" +
-                        "WHERE\n" +
-                        "  ROW_NUM >= ? AND ROW_NUM < ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfPlatforms")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -84,22 +64,13 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
     }
 
     @Override
-    public List<Platform> findChildren(long id) throws SQLException {
+    public List<Platform> findChildren(long id) throws SQLException, IOException {
         List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  PLATFORM_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , NAME\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.PLATFORM\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID = ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectChildPlatforms")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -113,23 +84,14 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
     }
 
     @Override
-    public List<Platform> findRoot() throws SQLException {
+    public List<Platform> findRoot() throws SQLException, IOException {
         List<Platform> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery("SELECT\n" +
-                        "  PLATFORM_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , NAME\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.PLATFORM\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PARENT_ID IS NULL")
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectRootPlatforms")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -140,20 +102,11 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
     }
 
     @Override
-    public Platform findOne(long id) throws SQLException {
+    public Platform findOne(long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(url);
-                PreparedStatement st = conn.prepareStatement("SELECT\n" +
-                        "  PLATFORM_ID\n" +
-                        "  , PARENT_ID\n" +
-                        "  , NAME\n" +
-                        "  , DISPLAY_NAME\n" +
-                        "  , DESCRIPTION\n" +
-                        "FROM\n" +
-                        "  dbo.PLATFORM\n" +
-                        "WHERE\n" +
-                        "  IS_DELETED = 0 AND\n" +
-                        "  PLATFORM_ID = ?")
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectPlatform")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
