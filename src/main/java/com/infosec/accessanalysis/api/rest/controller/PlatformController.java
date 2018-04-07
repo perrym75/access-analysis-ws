@@ -18,7 +18,8 @@ public class PlatformController {
 
     @GetMapping
     public List<Platform> getAll(@RequestParam(value="page", defaultValue = "0") long page,
-                                          @RequestParam(value="count", defaultValue = "1000000000000000") long count) throws SQLException, IOException {
+                                          @RequestParam(value="count", defaultValue = "1000000000000000") long count)
+            throws SQLException, IOException {
         return platformRepository.findRangeOfAll(page * count, count);
     }
 
