@@ -2,6 +2,7 @@ package com.infosec.accessanalysis.api.rest.controller;
 
 import com.infosec.accessanalysis.dao.model.Personage;
 import com.infosec.accessanalysis.dao.model.Resource;
+import com.infosec.accessanalysis.dao.model.UserAccount;
 import com.infosec.accessanalysis.dao.repository.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ public class PersonageController {
 
     private final PersonageRepository personageRepository = new PersonageRepository();
     private final ResourceRepository resourceRepository = new ResourceRepository();
+    private final UserAccountRepository userAccountRepository = new UserAccountRepository();
 
     @GetMapping
     public List<Personage> getAll(@RequestParam(value="page", defaultValue = "0") long page,
@@ -28,7 +30,13 @@ public class PersonageController {
     }
 
     @GetMapping("/{id}/resource")
-    public List<Resource> getAgentResources(@PathVariable(value="id") long id) throws SQLException, IOException {
+    public List<Resource> getPersonageResources(@PathVariable(value="id") long id) throws SQLException, IOException {
         return resourceRepository.findByPersonage(id);
+    }
+
+    @GetMapping("/{id}/resource/{res_id}/useraccount")
+    public List<UserAccount> getPersonageUserAccounts(@PathVariable(value="id") long id,
+                                                      @PathVariable(value="res_id") long res_id) throws SQLException, IOException {
+        return userAccountRepository.findByPersonageAndResource(id, res_id);
     }
 }

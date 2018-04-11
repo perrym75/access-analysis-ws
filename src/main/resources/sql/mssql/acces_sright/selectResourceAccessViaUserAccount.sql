@@ -56,19 +56,9 @@ FROM
   dbo.PERSONAGE pers
     ON
       pers.PERSONAGE_ID = ua.PERSONAGE_ID
-  INNER JOIN
-  dbo.EMPLOYEE emp
-    ON
-      pers.EMPLOYEE_ID = emp.EMPLOYEE_ID
-  INNER JOIN
-  dbo.POST post
-    ON
-      pers.POST_ID = post.POST_ID
 WHERE
-  post.IS_DELETED = 0
-  AND pers.IS_DELETED = 0
-  AND emp.IS_DELETED = 0
-  AND pers.PERSONAGE_ID = ?
+  pers.PERSONAGE_ID = ?
   AND res.RESOURCE_ID = ?
+  AND ua.SECURITY_PRINCIPAL_ID = ?
 ORDER BY
   ar.ACCESS_RIGHT_ID

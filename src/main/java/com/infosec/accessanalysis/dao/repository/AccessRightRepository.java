@@ -18,7 +18,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
     private final String dbUrl = Configuration.getDbUrl();
 
     private static String getQueryResourceName(String query) {
-        return Configuration.getSqlQueryResourcePrefix() + "accessright/" + query + ".sql";
+        return Configuration.getSqlQueryResourcePrefix() + "acces_sright/" + query + ".sql";
     }
 
     @Override

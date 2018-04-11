@@ -16,7 +16,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
     private final String dbUrl = Configuration.getDbUrl();
 
     private static String getQueryResourceName(String query) {
-        return Configuration.getSqlQueryResourcePrefix() + "useraccount/" + query + ".sql";
+        return Configuration.getSqlQueryResourcePrefix() + "user_account/" + query + ".sql";
     }
 
     @Override
@@ -88,6 +88,45 @@ public class UserAccountRepository implements Repository<UserAccount> {
                         TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByUnit")))
         ) {
             st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
+    public List<UserAccount> findByPersonage(long id) throws SQLException, IOException {
+        List<UserAccount> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByPersonage")))
+        ) {
+            st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
+    public List<UserAccount> findByPersonageAndResource(long pers_id, long res_id) throws SQLException, IOException {
+        List<UserAccount> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByPersonageAndResource")))
+        ) {
+            st.setLong(1, pers_id);
+            st.setLong(2, res_id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
