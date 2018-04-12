@@ -158,10 +158,12 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
     }
 
     private Resource createEntity(ResultSet rs) throws SQLException {
+        String name = rs.getString(3);
+        name = name.substring(name.lastIndexOf('/') + 1);
         return new Resource(
                 rs.getLong(1),
                 rs.getLong(2),
-                rs.getString(3),
+                name,
                 rs.getString(4),
                 rs.getString(5),
                 rs.getLong(6));

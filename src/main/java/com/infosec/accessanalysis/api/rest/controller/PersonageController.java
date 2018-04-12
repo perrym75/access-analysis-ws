@@ -35,6 +35,12 @@ public class PersonageController {
         return resourceRepository.findByPersonage(id);
     }
 
+    @GetMapping("/{id}/useraccount")
+    public List<UserAccount> getPersonageUserAccounts(@PathVariable(value="id") long id)
+            throws SQLException, IOException {
+        return userAccountRepository.findByPersonage(id);
+    }
+
     @GetMapping("/{id}/resource/{res_id}/useraccount")
     public List<UserAccount> getPersonageUserAccounts(@PathVariable(value="id") long id,
                                                       @PathVariable(value="res_id") long res_id) throws SQLException, IOException {

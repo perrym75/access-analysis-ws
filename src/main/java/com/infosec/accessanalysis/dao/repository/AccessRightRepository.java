@@ -62,17 +62,19 @@ public class AccessRightRepository implements Repository<AccessRight> {
         return null;
     }
 
-    public Set<AccessRight> findByPersonageAndResourceViaSP(long personageId, long resourceId)
+    public List<AccessRight> findByPersonageResourceUserAccount(long personageId, long resourceId,
+                                                               long userAccountId)
             throws SQLException, IOException {
-        Set<AccessRight> entities = new HashSet<>();
+        List<AccessRight> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaSP")))
+                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaUserAccount")))
         ) {
             st.setLong(1, personageId);
-            st.setLong(1, resourceId);
+            st.setLong(2, resourceId);
+            st.setLong(3, userAccountId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -83,9 +85,9 @@ public class AccessRightRepository implements Repository<AccessRight> {
         return entities;
     }
 
-    public Set<AccessRight> findByPersonageAndResourceViaRoles(long personageId, long resourceId)
+    public List<AccessRight> findByPersonageResourceRole(long personageId, long resourceId, long roleId)
             throws SQLException, IOException {
-        Set<AccessRight> entities = new HashSet<>();
+        List<AccessRight> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
@@ -93,7 +95,8 @@ public class AccessRightRepository implements Repository<AccessRight> {
                         TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaRoles")))
         ) {
             st.setLong(1, personageId);
-            st.setLong(1, resourceId);
+            st.setLong(2, resourceId);
+            st.setLong(3, roleId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));

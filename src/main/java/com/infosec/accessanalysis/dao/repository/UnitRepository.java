@@ -140,10 +140,12 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
     }
 
     private Unit createEntity(ResultSet rs) throws SQLException, IOException{
+        String name = rs.getString(3);
+        //name = name.substring(name.lastIndexOf('/') + 1);
         Unit entity = new Unit(
                 rs.getLong(1),
                 rs.getLong(2),
-                rs.getString(3));
+                name);
         entity.setUserAccounts(userAccountRepository.findByUnit(entity.getId()));
 
         return entity;
