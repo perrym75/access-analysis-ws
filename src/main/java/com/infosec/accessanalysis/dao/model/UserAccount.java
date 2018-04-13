@@ -4,13 +4,15 @@ public class UserAccount {
     private long id;
     private String displayName;
     private long unitId;
+    private long agentId;
     private int status;
 
     public UserAccount(long id, String displayName, long unitId,
-                       int status) {
+                       long agentId, int status) {
         this.id = id;
         this.displayName = displayName;
         this.unitId = unitId;
+        this.agentId = agentId;
         this.status = status;
     }
 
@@ -44,5 +46,13 @@ public class UserAccount {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(long agentId) {
+        this.agentId = agentId;
     }
 }

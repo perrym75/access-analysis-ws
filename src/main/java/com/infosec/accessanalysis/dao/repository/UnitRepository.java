@@ -145,7 +145,8 @@ public class UnitRepository implements HierarchicalRepository<Unit> {
         Unit entity = new Unit(
                 rs.getLong(1),
                 rs.getLong(2),
-                name);
+                name,
+                rs.getLong(4));
         entity.setUserAccounts(userAccountRepository.findByUnit(entity.getId()));
 
         return entity;

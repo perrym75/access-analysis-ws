@@ -7,12 +7,14 @@ public class Unit {
     private long id;
     private long parentId;
     private String displayName;
+    private long agentId;
     private List<UserAccount> userAccounts = new LinkedList<>();
 
-    public Unit(long id, long parent_id, String displayName) {
+    public Unit(long id, long parent_id, String displayName, long agentId) {
         this.id = id;
         this.parentId = parent_id;
         this.displayName = displayName;
+        this.agentId = agentId;
     }
 
     public long getId() {
@@ -45,5 +47,13 @@ public class Unit {
 
     public void setUserAccounts(List<UserAccount> userAccounts) {
         this.userAccounts = userAccounts;
+    }
+
+    public long getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(long agentId) {
+        this.agentId = agentId;
     }
 }
