@@ -84,4 +84,3 @@ ELSE
     WHERE
       res.RESOURCE_ID = @res_id
   END
-END
