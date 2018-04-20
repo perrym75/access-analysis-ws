@@ -18,24 +18,30 @@ public class ResourceController {
 
     @GetMapping
     public List<Resource> getAll(@RequestParam(value="page", defaultValue = "0") long page,
-                                 @RequestParam(value="count", defaultValue = "1000000000000000") long count)
+                                 @RequestParam(value="count", defaultValue = "1000000000000000") long count,
+                                 @RequestParam(value="model_id", defaultValue = "0") long model_id)
             throws SQLException, IOException {
-        return repository.findRangeOfAll(page * count, count);
+        return repository.findRangeOfAll(model_id, page * count, count);
     }
 
     @GetMapping("/{id}")
-    public Resource getOne(@PathVariable(value="id") long id) throws SQLException, IOException {
-        return repository.findOne(id);
+    public Resource getOne(@PathVariable(value="id") long id,
+                           @RequestParam(value="model_id", defaultValue = "0") long model_id)
+            throws SQLException, IOException {
+        return repository.findOne(model_id, id);
     }
 
     @GetMapping("/children")
-    public List<Resource> getRoot() throws SQLException, IOException {
-        return repository.findRoot();
+    public List<Resource> getRoot(@RequestParam(value="model_id", defaultValue = "0") long model_id)
+            throws SQLException, IOException {
+        return repository.findRoot(model_id);
     }
 
     @GetMapping("/{id}/children")
-    public List<Resource> getChildren(@PathVariable(value="id") long id) throws SQLException, IOException {
-        return repository.findChildren(id);
+    public List<Resource> getChildren(@PathVariable(value="id") long id,
+                                      @RequestParam(value="model_id", defaultValue = "0") long model_id)
+            throws SQLException, IOException {
+        return repository.findChildren(model_id, id);
     }
 
     @GetMapping("/{id}/personage")

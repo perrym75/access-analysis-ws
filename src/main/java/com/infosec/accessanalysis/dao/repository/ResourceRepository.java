@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ResourceRepository implements HierarchicalRepository<Resource> {
+public class ResourceRepository {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final String url = Configuration.getDbUrl();
@@ -20,26 +20,26 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         return Configuration.getSqlQueryResourcePrefix() + "resource/" + query + ".sql";
     }
 
-    @Override
-    public List<Resource> findAll() throws SQLException, IOException {
+    public List<Resource> findAll(long model_id) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(
+                PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectAllResources")))
         ) {
-            while (rs.next()) {
-                entities.add(createEntity(rs));
+            st.setLong(1, model_id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
             }
         }
 
         return entities;
     }
 
-    @Override
-    public List<Resource> findRangeOfAll(long from, long count) throws SQLException, IOException {
+    public List<Resource> findRangeOfAll(long model_id, long from, long count) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
@@ -47,8 +47,9 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectRangeOfResources")))
         ) {
-            st.setLong(1, from + 1);
-            st.setLong(2, from + 1 + count);
+            st.setLong(1, model_id);
+            st.setLong(2, from + 1);
+            st.setLong(3, from + 1 + count);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -63,8 +64,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         return entities;
     }
 
-    @Override
-    public List<Resource> findChildren(long id) throws SQLException, IOException {
+    public List<Resource> findChildren(long model_id, long id) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
@@ -72,7 +72,8 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectChildResources")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, model_id);
+            st.setLong(2, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -83,32 +84,33 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         return entities;
     }
 
-    @Override
-    public List<Resource> findRoot() throws SQLException, IOException {
+    public List<Resource> findRoot(long model_id) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(url);
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(
+                PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectRootResources")))
         ) {
-            while (rs.next()) {
-                entities.add(createEntity(rs));
+            st.setLong(1, model_id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
             }
         }
 
         return entities;
     }
 
-    @Override
-    public Resource findOne(long id) throws SQLException, IOException {
+    public Resource findOne(long model_id, long id) throws SQLException, IOException {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectResource")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, model_id);
+            st.setLong(2, id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     return createEntity(rs);
@@ -119,7 +121,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         return null;
     }
 
-    public List<Resource> findByAgent(long id) throws SQLException, IOException {
+    public List<Resource> findByAgent(long model_id, long id) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
@@ -127,7 +129,8 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectResourcesByAgent")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, model_id);
+            st.setLong(2, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -138,7 +141,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
         return entities;
     }
 
-    public List<Resource> findByPersonage(long id) throws SQLException, IOException {
+    public List<Resource> findByPersonage(long model_id, long id) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (
@@ -146,7 +149,8 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 PreparedStatement st = conn.prepareStatement(
                         TextResourceReader.readResource(getQueryResourceName("selectResourcesByPersonage")))
         ) {
-            st.setLong(1, id);
+            st.setLong(1, model_id);
+            st.setLong(2, id);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     entities.add(createEntity(rs));
@@ -166,6 +170,7 @@ public class ResourceRepository implements HierarchicalRepository<Resource> {
                 name,
                 rs.getString(4),
                 rs.getString(5),
-                rs.getLong(6));
+                rs.getLong(6),
+                rs.getInt(7));
     }
 }

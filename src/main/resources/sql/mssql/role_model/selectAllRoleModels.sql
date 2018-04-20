@@ -1,0 +1,5 @@
+SELECT
+  ROLE_MODEL_ID,
+  ACTIVE,
+  NAME
+from dbo.ROLE_MODEL

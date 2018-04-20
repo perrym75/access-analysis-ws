@@ -41,8 +41,10 @@ public class AgentController {
     }
 
     @GetMapping("/{id}/resource")
-    public List<Resource> getAgentResources(@PathVariable(value="id") long id) throws SQLException, IOException {
-        return resourceRepository.findByAgent(id);
+    public List<Resource> getAgentResources(@PathVariable(value="id") long id,
+                                            @RequestParam(value="model_id", defaultValue = "0") long model_id)
+            throws SQLException, IOException {
+        return resourceRepository.findByAgent(model_id, id);
     }
 
     @GetMapping("/{id}/unit")

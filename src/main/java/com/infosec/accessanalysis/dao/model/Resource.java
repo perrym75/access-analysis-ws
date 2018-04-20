@@ -7,14 +7,16 @@ public class Resource {
     private String systemId;
     private String typeName;
     private long agentId;
+    private int status;
 
-    public Resource(long id, long parentId, String name, String systemId, String typeName, long agentId) {
+    public Resource(long id, long parentId, String name, String systemId, String typeName, long agentId, int status) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
         this.systemId = systemId;
         this.typeName = typeName;
         this.agentId = agentId;
+        this.status = status;
     }
 
     public long getId() {
@@ -63,5 +65,13 @@ public class Resource {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

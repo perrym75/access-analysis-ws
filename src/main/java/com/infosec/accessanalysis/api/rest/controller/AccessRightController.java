@@ -14,11 +14,19 @@ public class AccessRightController {
 
     private final AccessRightRepository accessRightRepository = new AccessRightRepository();
 
-    @GetMapping
+    @GetMapping("/useraccount")
     public Collection<AccessRight> getByPersonageResourceUserAccount(@RequestParam(value="personageId") long personageId,
                                                                      @RequestParam(value="resourceId") long resourceId,
                                                                      @RequestParam(value="userAccountId") long userAccountId)
             throws SQLException, IOException {
         return accessRightRepository.findByPersonageResourceUserAccount(personageId, resourceId, userAccountId);
+    }
+
+    @GetMapping("role")
+    public Collection<AccessRight> getByPersonageResourceRole(@RequestParam(value="personageId") long personageId,
+                                                                     @RequestParam(value="resourceId") long resourceId,
+                                                                     @RequestParam(value="roleId") long roleId)
+            throws SQLException, IOException {
+        return accessRightRepository.findByPersonageResourceRole(personageId, resourceId, roleId);
     }
 }
