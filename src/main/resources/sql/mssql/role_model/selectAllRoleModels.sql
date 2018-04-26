@@ -2,4 +2,4 @@ SELECT
   ROLE_MODEL_ID,
   ACTIVE,
   NAME
-from dbo.ROLE_MODEL
+from ROLE_MODEL

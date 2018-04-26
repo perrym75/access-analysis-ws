@@ -9,7 +9,7 @@
      OVER (
        ORDER BY rm.ROLE_MODEL_ID ) AS ROW_NUM
    FROM
-     dbo.ROLE_MODEL AS rm)
+     ROLE_MODEL AS rm)
 SELECT *
 FROM
   RMODEL

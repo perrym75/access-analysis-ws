@@ -3,7 +3,7 @@ DECLARE @pers_id BIGINT = ?
 DECLARE @active_model_id BIGINT
 
 SET @active_model_id = (SELECT ROLE_MODEL_ID
-                        FROM dbo.ROLE_MODEL
+                        FROM ROLE_MODEL
                         WHERE ACTIVE > 0)
 
 IF @model_id = 0
@@ -52,10 +52,10 @@ IF @model_id = 0
       CASE WHEN
         (SELECT COUNT(*)
          FROM
-           dbo.LNK_ROLE_PERS_RES_AR
+           LNK_ROLE_PERS_RES_AR
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
-                        FROM dbo.ROLE2
+                        FROM ROLE2
                         WHERE ROLE_MODEL_ID = @active_model_id) AND
            RESOURCE_ID = res.RESOURCE_ID) > 0
         THEN
@@ -64,9 +64,9 @@ IF @model_id = 0
         0
       END     AS STATUS
     FROM
-      dbo.PERSONAGE pers
+      PERSONAGE pers
       INNER JOIN
-      dbo.USER_ACCOUNT ua
+      USER_ACCOUNT ua
         ON
           pers.PERSONAGE_ID = ua.PERSONAGE_ID
       INNER JOIN
@@ -74,15 +74,15 @@ IF @model_id = 0
         ON
           ua.SECURITY_PRINCIPAL_ID = tsp.CHILD_ID
       INNER JOIN
-      dbo.ACCESS_ENTRY ae
+      ACCESS_ENTRY ae
         ON
           ae.SECURITY_PRINCIPAL_ID = tsp.PARENT_ID
       INNER JOIN
-      dbo.[RESOURCE] res
+      [RESOURCE] res
         ON
           ae.RESOURCE_ID = res.RESOURCE_ID
       INNER JOIN
-      dbo.RESOURCE_TYPE rt
+      RESOURCE_TYPE rt
         ON
           res.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID
     WHERE
@@ -135,18 +135,18 @@ ELSE
       CASE WHEN
         (SELECT COUNT(*)
          FROM
-           dbo.LNK_ROLE_PERS_RES_AR
+           LNK_ROLE_PERS_RES_AR
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
-                        FROM dbo.ROLE2
+                        FROM ROLE2
                         WHERE ROLE_MODEL_ID = @model_id) AND
            RESOURCE_ID = res.RESOURCE_ID) > 0 AND
         (SELECT COUNT(*)
          FROM
-           dbo.LNK_ROLE_PERS_RES_AR
+           LNK_ROLE_PERS_RES_AR
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
-                        FROM dbo.ROLE2
+                        FROM ROLE2
                         WHERE ROLE_MODEL_ID = @active_model_id) AND
            RESOURCE_ID = res.RESOURCE_ID) = 0
         THEN
@@ -154,18 +154,18 @@ ELSE
       WHEN
         (SELECT COUNT(*)
          FROM
-           dbo.LNK_ROLE_PERS_RES_AR
+           LNK_ROLE_PERS_RES_AR
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
-                        FROM dbo.ROLE2
+                        FROM ROLE2
                         WHERE ROLE_MODEL_ID = @model_id) AND
            RESOURCE_ID = res.RESOURCE_ID) = 0 AND
         (SELECT COUNT(*)
          FROM
-           dbo.LNK_ROLE_PERS_RES_AR
+           LNK_ROLE_PERS_RES_AR
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
-                        FROM dbo.ROLE2
+                        FROM ROLE2
                         WHERE ROLE_MODEL_ID = @active_model_id) AND
            RESOURCE_ID = res.RESOURCE_ID) > 0
         THEN
@@ -174,9 +174,9 @@ ELSE
         0
       END     AS STATUS
     FROM
-      dbo.PERSONAGE pers
+      PERSONAGE pers
       INNER JOIN
-      dbo.USER_ACCOUNT ua
+      USER_ACCOUNT ua
         ON
           pers.PERSONAGE_ID = ua.PERSONAGE_ID
       INNER JOIN
@@ -184,15 +184,15 @@ ELSE
         ON
           ua.SECURITY_PRINCIPAL_ID = tsp.CHILD_ID
       INNER JOIN
-      dbo.ACCESS_ENTRY ae
+      ACCESS_ENTRY ae
         ON
           ae.SECURITY_PRINCIPAL_ID = tsp.PARENT_ID
       INNER JOIN
-      dbo.[RESOURCE] res
+      [RESOURCE] res
         ON
           ae.RESOURCE_ID = res.RESOURCE_ID
       INNER JOIN
-      dbo.RESOURCE_TYPE rt
+      RESOURCE_TYPE rt
         ON
           res.RESOURCE_TYPE_ID = rt.RESOURCE_TYPE_ID
     WHERE

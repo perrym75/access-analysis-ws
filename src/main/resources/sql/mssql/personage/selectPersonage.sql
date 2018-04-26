@@ -11,7 +11,7 @@ SELECT
     (
       SELECT COUNT(*)
       FROM
-        dbo.USER_ACCOUNT ua
+        USER_ACCOUNT ua
       WHERE
         ua.PERSONAGE_ID = pers.PERSONAGE_ID
     )
@@ -24,13 +24,13 @@ SELECT
     END
   ) AS STATUS
 FROM
-  dbo.POST post
+  POST post
   INNER JOIN
-  dbo.PERSONAGE pers
+  PERSONAGE pers
     ON
       post.POST_ID = pers.POST_ID
     INNER JOIN
-    dbo.EMPLOYEE emp
+    EMPLOYEE emp
       ON
         pers.EMPLOYEE_ID = emp.EMPLOYEE_ID
 WHERE

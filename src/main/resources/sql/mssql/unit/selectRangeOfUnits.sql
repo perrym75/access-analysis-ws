@@ -8,7 +8,7 @@ AS
      , AGENT_ID
      , ROW_NUMBER() OVER (ORDER BY UNIT_ID) as ROW_NUM
    FROM
-     dbo.UNIT)
+     UNIT)
 SELECT
   *
 FROM

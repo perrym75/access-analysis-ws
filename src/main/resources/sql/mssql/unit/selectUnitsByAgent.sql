@@ -4,7 +4,7 @@ SELECT
   , u.DISPLAY_NAME
   , u.AGENT_ID
 FROM
-  dbo.UNIT u
+  UNIT u
 WHERE
   u.PARENT_ID IS NULL
   AND u.AGENT_ID = ?
