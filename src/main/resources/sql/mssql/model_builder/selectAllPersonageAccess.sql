@@ -96,8 +96,8 @@ select
   distinct
   prs.PERSONAGE_ID,
   ur.RESOURCE_ID,
-  ur.ACCESS_RIGHTS,
   d.DEPARTMENT_ID,
+  ur.ACCESS_RIGHTS,
   d.DIRECTOR_ID,
   pst.POST_ID
 from

@@ -39,6 +39,7 @@ public class ModelBuilderRepository {
         return new PersResAccRights(
                 rs.getLong(1),
                 rs.getLong(2),
-                rs.getString(3));
+                rs.getLong(3),
+                rs.getString(4));
     }
 }
