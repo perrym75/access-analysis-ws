@@ -73,7 +73,7 @@ public class RuleProcessingController {
                 eliminated = false;
                 for (Set<ResourceAccess> item1 : departmentRoles.keySet()) {
                     for (Set<ResourceAccess> item2 : departmentRoles.keySet()) {
-                        if (!item1.equals(item2)) {
+                        if (!item1.equals(item2) && departmentRoles.get(item1).equals(departmentRoles.get(item2))) {
                             if (item1.containsAll(item2)) {
                                 departmentRoles.remove(item2);
                                 eliminated = true;
