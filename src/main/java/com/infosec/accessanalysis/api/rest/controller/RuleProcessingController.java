@@ -38,7 +38,8 @@ public class RuleProcessingController {
         Map<Long, Map<Set<ResourceAccess>, Set<Long>>> result = new HashMap<>();
 
         List<PersResAccRights> rights = modelBuilderRepository.findAll();
-        Map<Long, List<PersResAccRights>> groupByDep = rights.stream().collect(groupingBy(PersResAccRights::getDepartmentId));
+        Map<Long, List<PersResAccRights>> groupByDep =
+                rights.stream().collect(groupingBy(PersResAccRights::getDepartmentId));
 
         for (Map.Entry<Long, List<PersResAccRights>> departmentEntry : groupByDep.entrySet()) {
             Long departmentId = departmentEntry.getKey();
