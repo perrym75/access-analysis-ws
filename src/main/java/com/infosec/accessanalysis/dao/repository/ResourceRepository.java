@@ -163,7 +163,7 @@ public class ResourceRepository {
 
     private Resource createEntity(ResultSet rs) throws SQLException {
         String name = rs.getString(3);
-        name = name.substring(name.lastIndexOf('/') + 1);
+        //name = name.substring(name.lastIndexOf('/') + 1);
         return new Resource(
                 rs.getLong(1),
                 rs.getLong(2),

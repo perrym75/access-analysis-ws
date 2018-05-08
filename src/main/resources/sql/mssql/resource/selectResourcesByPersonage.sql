@@ -60,6 +60,26 @@ IF @model_id = 0
            RESOURCE_ID = res.RESOURCE_ID) > 0
         THEN
           1
+      WHEN
+        (SELECT COUNT(*)
+         FROM
+           ACCESS_ENTRY ae
+           INNER JOIN
+           TreeSP tsp
+             ON
+               ae.SECURITY_PRINCIPAL_ID = tsp.PARENT_ID
+           INNER JOIN
+           USER_ACCOUNT ua
+             ON
+               ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
+           INNER JOIN
+           PERSONAGE p
+             ON
+               ua.PERSONAGE_ID = p.PERSONAGE_ID
+         WHERE
+           ae.RESOURCE_ID = res.RESOURCE_ID) > 0
+        THEN
+          2
       ELSE
         0
       END     AS STATUS
@@ -72,7 +92,7 @@ IF @model_id = 0
       INNER JOIN
       TreeSP tsp
         ON
-          ua.SECURITY_PRINCIPAL_ID = tsp.CHILD_ID
+          ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
       INNER JOIN
       ACCESS_ENTRY ae
         ON
@@ -182,7 +202,7 @@ ELSE
       INNER JOIN
       TreeSP tsp
         ON
-          ua.SECURITY_PRINCIPAL_ID = tsp.CHILD_ID
+          ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
       INNER JOIN
       ACCESS_ENTRY ae
         ON
