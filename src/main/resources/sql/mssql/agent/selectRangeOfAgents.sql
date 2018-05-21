@@ -1,6 +1,6 @@
 ;
 WITH
-    AGENT
+    AG
   AS
   (SELECT
      AGENT_ID,
@@ -11,8 +11,7 @@ WITH
      ROW_NUMBER()
      OVER (
        ORDER BY AGENT_ID ) AS ROW_NUM
-   FROM [AGENT]
-   WHERE IS_DELETED = 0)
+   FROM [AGENT])
 SELECT *
-FROM AGENT
+FROM AG
 WHERE ROW_NUM >= ? AND ROW_NUM < ?

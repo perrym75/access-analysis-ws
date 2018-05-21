@@ -83,6 +83,23 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         return entities;
     }
 
+    public List<Agent> findWithResources() throws SQLException, IOException {
+        List<Agent> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(
+                        TextResourceReader.readResource(getQueryResourceName("selectAgentsWithResources")))
+        ) {
+            while (rs.next()) {
+                entities.add(createEntity(rs));
+            }
+        }
+
+        return entities;
+    }
+
     @Override
     public List<Agent> findRoot() throws SQLException, IOException {
         List<Agent> entities = new LinkedList<>();

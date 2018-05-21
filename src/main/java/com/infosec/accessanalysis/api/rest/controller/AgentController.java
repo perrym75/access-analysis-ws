@@ -35,6 +35,11 @@ public class AgentController {
         return agentRepository.findRoot();
     }
 
+    @GetMapping("/withresources")
+    public List<Agent> getAllWithResources() throws SQLException, IOException {
+        return agentRepository.findWithResources();
+    }
+
     @GetMapping("/{id}/children")
     public List<Agent> getChildren(@PathVariable(value="id") long id) throws SQLException, IOException {
         return agentRepository.findChildren(id);

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/acces_sright/selectResourceAccessViaRoles.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/acces_sright/selectResourceAccessViaUserAccount.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/access_right/selectResourceAccessViaRoles.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/access_right/selectResourceAccessViaUserAccount.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgent.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgentsByPlatform.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgentsWithResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAllAgents.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectChildAgents.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectRangeOfAgents.sql" dialect="TSQL" />
@@ -19,6 +20,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonage.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonageByResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonagesByDepartment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectRangeOfPersonages.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectAllPlatforms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectChildPlatforms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectPlatform.sql" dialect="TSQL" />

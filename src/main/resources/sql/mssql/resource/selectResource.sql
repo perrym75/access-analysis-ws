@@ -51,7 +51,7 @@ IF @model_id = 0
       CASE WHEN
         (SELECT COUNT(*)
          FROM
-           LNK_ROLE_PERS_RES_AR
+           LINK_ROLE2_RESOURCE
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
                         FROM ROLE2
@@ -103,7 +103,7 @@ ELSE
       CASE WHEN
         (SELECT COUNT(*)
          FROM
-           LNK_ROLE_PERS_RES_AR
+           LINK_ROLE2_RESOURCE
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
                         FROM ROLE2
@@ -111,7 +111,7 @@ ELSE
            RESOURCE_ID = res.RESOURCE_ID) > 0 AND
         (SELECT COUNT(*)
          FROM
-           LNK_ROLE_PERS_RES_AR
+           LINK_ROLE2_RESOURCE
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
                         FROM ROLE2
@@ -122,7 +122,7 @@ ELSE
       WHEN
         (SELECT COUNT(*)
          FROM
-           LNK_ROLE_PERS_RES_AR
+           LINK_ROLE2_RESOURCE
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
                         FROM ROLE2
@@ -130,7 +130,7 @@ ELSE
            RESOURCE_ID = res.RESOURCE_ID) = 0 AND
         (SELECT COUNT(*)
          FROM
-           LNK_ROLE_PERS_RES_AR
+           LINK_ROLE2_RESOURCE
          WHERE
            ROLE2_ID IN (SELECT ROLE2_ID
                         FROM ROLE2

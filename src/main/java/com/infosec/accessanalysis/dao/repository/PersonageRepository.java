@@ -57,7 +57,27 @@ public class PersonageRepository implements Repository<Personage> {
 
     @Override
     public List<Personage> findRangeOfAll(long from, long count) throws SQLException, IOException {
-        return null;
+        List<Personage> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfPersonages")))
+        ) {
+            st.setLong(1, from + 1);
+            st.setLong(2, from + 1 + count);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+        catch (SQLException e) {
+            logger.info(e.toString());
+            throw e;
+        }
+
+        return entities;
     }
 
     public List<Personage> findByResource(long id) throws SQLException, IOException {
@@ -105,7 +125,8 @@ public class PersonageRepository implements Repository<Personage> {
                 rs.getString(3),
                 rs.getString(4),
                 rs.getString(5),
-                rs.getLong(6),
-                rs.getInt(7));
+                rs.getString(6),
+                rs.getLong(7),
+                rs.getInt(8));
     }
 }

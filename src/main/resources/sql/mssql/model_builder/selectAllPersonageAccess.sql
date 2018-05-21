@@ -38,22 +38,12 @@ with
      ae2.SECURITY_PRINCIPAL_ID,
      ae2.RESOURCE_ID,
      substring(
-         (select ','
-                 +
-                 cast(
-                     ae.ACCESS_RIGHT_ID
-                     as
-                     nvarchar(12))
+         (select ',' + cast(ae.ACCESS_RIGHT_ID as nvarchar(12))
           from
             ACCESS_ENTRY ae
           where
-            ae.SECURITY_PRINCIPAL_ID
-            =
-            ae2.SECURITY_PRINCIPAL_ID
-            and
-            ae.RESOURCE_ID
-            =
-            ae2.RESOURCE_ID
+            ae.SECURITY_PRINCIPAL_ID = ae2.SECURITY_PRINCIPAL_ID and
+            ae.RESOURCE_ID = ae2.RESOURCE_ID
           order by
             ae.ACCESS_RIGHT_ID
           for xml path ('')),
@@ -70,9 +60,7 @@ with
    from
      DEPARTMENT
    where
-     DEPARTMENT_ID
-     =
-     10000
+     DEPARTMENT_ID = 10000
    union all
    select
      td.ROOT_ID,
@@ -87,11 +75,8 @@ with
        on
          td.CHILD_ID = d.PARENT_ID
    where
-     d.IS_DELETED = 0
-     and
-     d.PARENT_ID
-     =
-     td.CHILD_ID )
+     d.IS_DELETED = 0 and
+     d.PARENT_ID = td.CHILD_ID )
 select
   distinct
   prs.PERSONAGE_ID,

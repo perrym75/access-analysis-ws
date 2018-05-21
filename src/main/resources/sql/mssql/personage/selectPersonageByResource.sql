@@ -38,6 +38,7 @@ SELECT
   emp.SECOND_NAME,
   emp.LAST_NAME,
   pers.EMAIL,
+  pos.NAME,
   post.DEPARTMENT_ID,
   1 AS STATUS
 FROM
@@ -66,8 +67,13 @@ FROM
   POST post
     ON
       pers.POST_ID = post.POST_ID
+  INNER JOIN
+  POSITION pos
+    ON
+      post.POSITION_ID = pos.POSITION_ID
 WHERE
   post.IS_DELETED = 0 AND
   pers.IS_DELETED = 0 AND
   emp.IS_DELETED = 0 AND
+  pos.IS_DELETED = 0 AND
   res.RESOURCE_ID = ?
