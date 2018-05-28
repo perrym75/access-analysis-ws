@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.UserAccount;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUserAccount")))
+                        CachedResourceReader.readString(getQueryResourceName("selectUserAccount")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllUserAccounts")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllUserAccounts")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -66,7 +66,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectUserAccountsByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -85,7 +85,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByUnit")))
+                        CachedResourceReader.readString(getQueryResourceName("selectUserAccountsByUnit")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -104,7 +104,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByPersonage")))
+                        CachedResourceReader.readString(getQueryResourceName("selectUserAccountsByPersonage")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -123,7 +123,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectUserAccountsByPersonageAndResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectUserAccountsByPersonageAndResource")))
         ) {
             st.setLong(1, pers_id);
             st.setLong(2, res_id);

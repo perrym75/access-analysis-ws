@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Role;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class RoleRepository implements Repository<Role> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRole")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRole")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class RoleRepository implements Repository<Role> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllRoles")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllRoles")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -66,7 +66,7 @@ public class RoleRepository implements Repository<Role> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRolesByResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRolesByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -85,7 +85,7 @@ public class RoleRepository implements Repository<Role> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRolesByPersonage")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRolesByPersonage")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -104,7 +104,7 @@ public class RoleRepository implements Repository<Role> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRolesByPersonageAndResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRolesByPersonageAndResource")))
         ) {
             st.setLong(1, pers_id);
             st.setLong(2, res_id);

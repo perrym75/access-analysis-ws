@@ -28,8 +28,7 @@ with
                          cast(spr.PARENT_ID as
                               nvarchar(12)) + '\'
                          as nvarchar(max)),
-                    TreeSP.FULL_PATH) =
-          0 ),
+                    TreeSP.FULL_PATH) = 0 and spr.EXISTENCE = 1),
     UnionRights(SECURITY_PRINCIPAL_ID,
       RESOURCE_ID,
       ACCESS_RIGHTS) as

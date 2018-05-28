@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Agent;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllAgents")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllAgents")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -45,7 +45,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfAgents")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRangeOfAgents")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -70,7 +70,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectChildAgents")))
+                        CachedResourceReader.readString(getQueryResourceName("selectChildAgents")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -90,7 +90,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAgentsWithResources")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAgentsWithResources")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -108,7 +108,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectRootAgents")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRootAgents")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -123,7 +123,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectAgent")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAgent")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -142,7 +142,7 @@ public class AgentRepository implements HierarchicalRepository<Agent> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectAgentsByPlatform")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAgentsByPlatform")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

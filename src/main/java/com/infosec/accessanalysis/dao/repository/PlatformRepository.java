@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Platform;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllPlatforms")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllPlatforms")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -45,7 +45,7 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfPlatforms")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRangeOfPlatforms")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -70,7 +70,7 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectChildPlatforms")))
+                        CachedResourceReader.readString(getQueryResourceName("selectChildPlatforms")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -91,7 +91,7 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
                 Connection conn = DriverManager.getConnection(url);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectRootPlatforms")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRootPlatforms")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -106,7 +106,7 @@ public class PlatformRepository implements HierarchicalRepository<Platform> {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectPlatform")))
+                        CachedResourceReader.readString(getQueryResourceName("selectPlatform")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {

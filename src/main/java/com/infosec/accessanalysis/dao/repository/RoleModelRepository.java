@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.RoleModel;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class RoleModelRepository implements Repository<RoleModel> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRoleModel")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRoleModel")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class RoleModelRepository implements Repository<RoleModel> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllRoleModels")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllRoleModels")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -62,7 +62,7 @@ public class RoleModelRepository implements Repository<RoleModel> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfRoleModels")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRangeOfRoleModels")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);

@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.AccessRight;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectAccessRight")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAccessRight")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllAccessRights")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllAccessRights")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -68,7 +68,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaUserAccount")))
+                        CachedResourceReader.readString(getQueryResourceName("selectResourceAccessViaUserAccount")))
         ) {
             st.setLong(1, personageId);
             st.setLong(2, resourceId);
@@ -90,7 +90,7 @@ public class AccessRightRepository implements Repository<AccessRight> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResourceAccessViaRoles")))
+                        CachedResourceReader.readString(getQueryResourceName("selectResourceAccessViaRoles")))
         ) {
             st.setLong(1, personageId);
             st.setLong(2, resourceId);

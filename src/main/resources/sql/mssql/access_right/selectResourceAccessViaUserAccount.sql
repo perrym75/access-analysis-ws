@@ -28,8 +28,10 @@ WITH
       INNER JOIN
       TreeSP ts
         ON
-          ts.PARENT_ID = sp.CHILD_ID AND
-          CHARINDEX(':' + CAST(sp.PARENT_ID AS NVARCHAR) + ':', SP_PATH) = 0
+          ts.PARENT_ID = sp.CHILD_ID
+    WHERE
+      CHARINDEX(':' + CAST(sp.PARENT_ID AS NVARCHAR) + ':', SP_PATH) = 0 AND
+      sp.EXISTENCE = 1
   )
 SELECT
   DISTINCT

@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Resource;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllResources")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllResources")))
         ) {
             st.setLong(1, model_id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfResources")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRangeOfResources")))
         ) {
             st.setLong(1, model_id);
             st.setLong(2, from + 1);
@@ -70,7 +70,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectChildResources")))
+                        CachedResourceReader.readString(getQueryResourceName("selectChildResources")))
         ) {
             st.setLong(1, model_id);
             st.setLong(2, id);
@@ -90,7 +90,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRootResources")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRootResources")))
         ) {
             st.setLong(1, model_id);
             try (ResultSet rs = st.executeQuery()) {
@@ -107,7 +107,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectResource")))
         ) {
             st.setLong(1, model_id);
             st.setLong(2, id);
@@ -127,7 +127,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByAgent")))
+                        CachedResourceReader.readString(getQueryResourceName("selectResourcesByAgent")))
         ) {
             st.setLong(1, model_id);
             st.setLong(2, id);
@@ -147,7 +147,7 @@ public class ResourceRepository {
         try (
                 Connection conn = DriverManager.getConnection(url);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectResourcesByPersonage")))
+                        CachedResourceReader.readString(getQueryResourceName("selectResourcesByPersonage")))
         ) {
             st.setLong(1, model_id);
             st.setLong(2, id);

@@ -2,7 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Personage;
-import com.infosec.tools.TextResourceReader;
+import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectPersonage")))
+                        CachedResourceReader.readString(getQueryResourceName("selectPersonage")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -45,7 +45,7 @@ public class PersonageRepository implements Repository<Personage> {
                 Connection conn = DriverManager.getConnection(dbUrl);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(
-                        TextResourceReader.readResource(getQueryResourceName("selectAllPersonages")))
+                        CachedResourceReader.readString(getQueryResourceName("selectAllPersonages")))
         ) {
             while (rs.next()) {
                 entities.add(createEntity(rs));
@@ -62,7 +62,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectRangeOfPersonages")))
+                        CachedResourceReader.readString(getQueryResourceName("selectRangeOfPersonages")))
         ) {
             st.setLong(1, from + 1);
             st.setLong(2, from + 1 + count);
@@ -86,7 +86,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectPersonageByResource")))
+                        CachedResourceReader.readString(getQueryResourceName("selectPersonageByResource")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
@@ -105,7 +105,7 @@ public class PersonageRepository implements Repository<Personage> {
         try (
                 Connection conn = DriverManager.getConnection(dbUrl);
                 PreparedStatement st = conn.prepareStatement(
-                        TextResourceReader.readResource(getQueryResourceName("selectPersonagesByDepartment")))
+                        CachedResourceReader.readString(getQueryResourceName("selectPersonagesByDepartment")))
         ) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
