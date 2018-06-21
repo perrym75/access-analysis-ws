@@ -3,21 +3,25 @@ package com.infosec.accessanalysis.algorithm;
 import java.util.*;
 
 public class Subsets {
-    private static <T> void calculate(Set<T> input, Set<Set<T>> result) {
-        if (!input.isEmpty()) {
-            result.add(input);
-            for (T item : input)
-            {
-                Set<T> exceptOne = new HashSet<>(input);
-                exceptOne.remove(item);
-                calculate(exceptOne, result);
-            }
-        }
-    }
-
     public static <T> Set<Set<T>> getSubsets(Set<T> input) {
         Set<Set<T>> result = new HashSet<>();
-        calculate(input, result);
+        Set<T> empty = new HashSet<>();
+
+        result.add(empty);
+
+        for (T inputItem : input) {
+            Set<Set<T>> subsetTemp = new HashSet<>();
+            for (Set<T> subsetItem : result) {
+                subsetTemp.add(new HashSet<>(subsetItem));
+            }
+
+            for (Set<T> subsetItem : subsetTemp) {
+                subsetItem.add(inputItem);
+            }
+
+            result.addAll(subsetTemp);
+        }
+
         return result;
     }
 }
