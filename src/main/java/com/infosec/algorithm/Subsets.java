@@ -1,4 +1,4 @@
-package com.infosec.tools.algorithm;
+package com.infosec.algorithm;
 
 import java.util.*;
 
