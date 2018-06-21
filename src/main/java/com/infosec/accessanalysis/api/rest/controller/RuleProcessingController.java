@@ -1,6 +1,6 @@
 package com.infosec.accessanalysis.api.rest.controller;
 
-import com.infosec.accessanalysis.algorithm.Subsets;
+import com.infosec.tools.algorithm.Subsets;
 import com.infosec.accessanalysis.business.ResourceAccess;
 import com.infosec.accessanalysis.dao.model.PersResAccRights;
 import com.infosec.accessanalysis.dao.repository.ModelBuilderRepository;
