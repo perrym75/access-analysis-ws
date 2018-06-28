@@ -8,41 +8,6 @@ SET @active_model_id = (SELECT ROLE_MODEL_ID
 
 IF @model_id = 0
   BEGIN
-    ;
-    WITH
-        TreeSP
-      ( ROOT_ID
-        , PARENT_ID
-        , CHILD_ID
-        , LEV
-        , SP_PATH )
-      AS
-      (
-        SELECT
-          SECURITY_PRINCIPAL_ID,
-          SECURITY_PRINCIPAL_ID,
-          SECURITY_PRINCIPAL_ID,
-          0,
-          CAST(':' + CAST(SECURITY_PRINCIPAL_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX))
-        FROM
-          USER_ACCOUNT
-        UNION ALL
-        SELECT
-          ts.ROOT_ID,
-          sp.PARENT_ID,
-          sp.CHILD_ID,
-          ts.LEV + 1,
-          ts.SP_PATH + CAST(sp.PARENT_ID AS NVARCHAR) + ':'
-        FROM
-          SP_RELATION sp
-          INNER JOIN
-          TreeSP ts
-            ON
-              ts.PARENT_ID = sp.CHILD_ID
-        WHERE
-          CHARINDEX(':' + CAST(sp.PARENT_ID AS NVARCHAR) + ':', SP_PATH) = 0 AND
-          sp.EXISTENCE = 1
-      )
     SELECT
       DISTINCT
       a.RESOURCE_ID,
@@ -67,13 +32,13 @@ IF @model_id = 0
          FROM
            ACCESS_ENTRY ae
            INNER JOIN
-           TreeSP tsp
+           T_SP tsp
              ON
                ae.SECURITY_PRINCIPAL_ID = tsp.PARENT_ID
            INNER JOIN
            USER_ACCOUNT ua
              ON
-               ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
+               ua.SECURITY_PRINCIPAL_ID = tsp.UA_SP_ID
            INNER JOIN
            PERSONAGE p
              ON
@@ -101,9 +66,9 @@ IF @model_id = 0
             ON
               pers.PERSONAGE_ID = ua.PERSONAGE_ID
           INNER JOIN
-          TreeSP tsp
+          T_SP tsp
             ON
-              ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
+              ua.SECURITY_PRINCIPAL_ID = tsp.UA_SP_ID
           INNER JOIN
           ACCESS_ENTRY ae
             ON
@@ -152,41 +117,6 @@ IF @model_id = 0
   END
 ELSE
   BEGIN
-    ;
-    WITH
-        TreeSP
-      ( ROOT_ID
-        , PARENT_ID
-        , CHILD_ID
-        , LEV
-        , SP_PATH )
-      AS
-      (
-        SELECT
-          SECURITY_PRINCIPAL_ID,
-          SECURITY_PRINCIPAL_ID,
-          SECURITY_PRINCIPAL_ID,
-          0                                                                          AS LEV,
-          CAST(':' + CAST(SECURITY_PRINCIPAL_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX)) AS SP_PATH
-        FROM
-          USER_ACCOUNT
-        UNION ALL
-        SELECT
-          ts.ROOT_ID,
-          sp.PARENT_ID,
-          sp.CHILD_ID,
-          ts.LEV + 1,
-          CAST(ts.SP_PATH + CAST(sp.PARENT_ID AS NVARCHAR) + ':' AS NVARCHAR(MAX))
-        FROM
-          SP_RELATION sp
-          INNER JOIN
-          TreeSP ts
-            ON
-              ts.PARENT_ID = sp.CHILD_ID
-        WHERE
-          CHARINDEX(':' + CAST(sp.PARENT_ID AS NVARCHAR) + ':', SP_PATH) = 0 AND
-          sp.EXISTENCE = 1
-      )
     SELECT
       DISTINCT
       a.RESOURCE_ID,
@@ -252,9 +182,9 @@ ELSE
             ON
               pers.PERSONAGE_ID = ua.PERSONAGE_ID
           INNER JOIN
-          TreeSP tsp
+          T_SP tsp
             ON
-              ua.SECURITY_PRINCIPAL_ID = tsp.ROOT_ID
+              ua.SECURITY_PRINCIPAL_ID = tsp.UA_SP_ID
           INNER JOIN
           ACCESS_ENTRY ae
             ON

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="CL_INFOSEC@10.2.2.20" uuid="818d5a70-8722-4754-b41d-02e2da4f97e0">
+    <data-source source="LOCAL" name="xroles@10.2.2.20 [2]" uuid="df1c2f81-e4e8-4a3c-be35-055c1c8cd8ba">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://10.2.2.20;database=CL_INFOSEC</jdbc-url>
-      <default-dialect>Oracle</default-dialect>
+      <jdbc-url>jdbc:sqlserver://10.2.2.20;database=xroles</jdbc-url>
       <driver-properties>
         <property name="applicationName" value="DataGrip" />
       </driver-properties>

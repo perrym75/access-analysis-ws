@@ -1,34 +1,5 @@
 ;
 with
-    TreeSP( ROOT_ID,
-      PARENT_ID,
-      CHILD_ID,
-      LEV,
-      FULL_PATH ) as
-  ( select
-      SECURITY_PRINCIPAL_ID,
-      SECURITY_PRINCIPAL_ID,
-      SECURITY_PRINCIPAL_ID,
-      0 LEV,
-      cast(
-          '\' + cast(SECURITY_PRINCIPAL_ID as nvarchar(12))
-          + '\' as nvarchar(max))
-    from USER_ACCOUNT
-    union all
-    select
-      TreeSP.ROOT_ID,
-      spr.PARENT_ID,
-      spr.CHILD_ID,
-      TreeSP.LEV + 1,
-      TreeSP.FULL_PATH +
-      cast(spr.PARENT_ID as nvarchar(12)) + '\'
-    from SP_RELATION spr inner join TreeSP
-        on TreeSP.PARENT_ID = spr.CHILD_ID
-    where charindex(cast('\' +
-                         cast(spr.PARENT_ID as
-                              nvarchar(12)) + '\'
-                         as nvarchar(max)),
-                    TreeSP.FULL_PATH) = 0 and spr.EXISTENCE = 1),
     UnionRights(SECURITY_PRINCIPAL_ID,
       RESOURCE_ID,
       ACCESS_RIGHTS) as
@@ -98,13 +69,13 @@ from
     on
       ua.PERSONAGE_ID = prs.PERSONAGE_ID
   inner join
-  TreeSP
+  T_SP tsp
     on
-      TreeSP.ROOT_ID = ua.SECURITY_PRINCIPAL_ID
+      tsp.UA_SP_ID = ua.SECURITY_PRINCIPAL_ID
   inner join
   UnionRights ur
     on
-      ur.SECURITY_PRINCIPAL_ID = TreeSP.PARENT_ID
+      ur.SECURITY_PRINCIPAL_ID = tsp.PARENT_ID
   inner join
   "RESOURCE" res
     on
