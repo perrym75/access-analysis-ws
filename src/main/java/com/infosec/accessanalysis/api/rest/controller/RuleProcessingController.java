@@ -33,9 +33,9 @@ public class RuleProcessingController {
 
 
     @GetMapping("/{id}/result")
-    public Map<Long, Map<Set<ResourceAccess>, Set<Long>>> getProcessResult(@PathVariable(value="id") long id)
+    public Map<Long, Map<Collection<ResourceAccess>, Set<Long>>> getProcessResult(@PathVariable(value="id") long id)
             throws SQLException, IOException {
-        Map<Long, Map<Set<ResourceAccess>, Set<Long>>> result = new HashMap<>();
+        Map<Long, Map<Collection<ResourceAccess>, Set<Long>>> result = new HashMap<>();
 
         List<PersResAccRights> rights = modelBuilderRepository.findAll();
         Map<Long, List<PersResAccRights>> groupByDep =
@@ -47,7 +47,7 @@ public class RuleProcessingController {
             Map<Long, List<PersResAccRights>> groupByPers =
                     allAccOfDep.stream().collect(groupingBy(PersResAccRights::getPersonageId));
 
-            Map<Set<ResourceAccess>, Set<Long>> departmentRoles = new HashMap<>();
+            Map<Collection<ResourceAccess>, Set<Long>> departmentRoles = new HashMap<>();
             for (Map.Entry<Long, List<PersResAccRights>> personageEntry : groupByPers.entrySet()) {
                 Long personageId = personageEntry.getKey();
                 List<PersResAccRights> allAccOfPers = personageEntry.getValue();
@@ -58,9 +58,9 @@ public class RuleProcessingController {
                     personageAccess.add(ra);
                 }
 
-                Set<Set<ResourceAccess>> subsets = Subsets.getSubsets(personageAccess);
+                Collection<Collection<ResourceAccess>> subsets = Subsets.getSubsets(personageAccess);
 
-                for (Set<ResourceAccess> item : subsets) {
+                for (Collection<ResourceAccess> item : subsets) {
                     if (!departmentRoles.containsKey(item)) {
                         departmentRoles.put(item, new HashSet<>());
                     }
@@ -72,8 +72,8 @@ public class RuleProcessingController {
             whileloop:
             while (eliminated) {
                 eliminated = false;
-                for (Set<ResourceAccess> item1 : departmentRoles.keySet()) {
-                    for (Set<ResourceAccess> item2 : departmentRoles.keySet()) {
+                for (Collection<ResourceAccess> item1 : departmentRoles.keySet()) {
+                    for (Collection<ResourceAccess> item2 : departmentRoles.keySet()) {
                         if (!item1.equals(item2) && departmentRoles.get(item1).equals(departmentRoles.get(item2))) {
                             if (item1.containsAll(item2)) {
                                 departmentRoles.remove(item2);
