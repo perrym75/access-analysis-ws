@@ -2,6 +2,7 @@ package com.infosec.accessanalysis.dao.repository;
 
 import com.infosec.accessanalysis.api.rest.Configuration;
 import com.infosec.accessanalysis.dao.model.Resource;
+import com.infosec.accessanalysis.dao.model.ResourceFilter;
 import com.infosec.tools.CachedResourceReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public class ResourceRepository {
         return entities;
     }
 
-    public List<Resource> findRoot(long model_id) throws SQLException, IOException {
+    public List<Resource> findRoot(long model_id, ResourceFilter filter) throws SQLException, IOException {
         List<Resource> entities = new LinkedList<>();
 
         try (

@@ -2,12 +2,15 @@ package com.infosec.accessanalysis.api.rest.controller;
 
 import com.infosec.accessanalysis.dao.model.Personage;
 import com.infosec.accessanalysis.dao.model.Resource;
+import com.infosec.accessanalysis.dao.model.ResourceFilter;
+import com.infosec.accessanalysis.dao.model.ResourceStatus;
 import com.infosec.accessanalysis.dao.repository.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/1.0/resource")
@@ -32,9 +35,15 @@ public class ResourceController {
     }
 
     @GetMapping("/children")
-    public List<Resource> getRoot(@RequestParam(value="model_id", defaultValue = "0") long model_id)
+    public List<Resource> getRoot(@RequestParam(value="model_id", defaultValue = "0") long model_id,
+                                  @RequestParam(value="filter", defaultValue = "") String filter)
             throws SQLException, IOException {
-        return repository.findRoot(model_id);
+        ResourceFilter resourceFilter = new ResourceFilter();
+        if (!filter.isEmpty()) {
+            Set<ResourceStatus> statuses =  ResourceStatus.parse(filter);
+            resourceFilter.setStatuses(statuses);
+        }
+        return repository.findRoot(model_id, resourceFilter);
     }
 
     @GetMapping("/{id}/children")

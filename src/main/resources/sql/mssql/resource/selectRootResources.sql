@@ -1,4 +1,10 @@
 DECLARE @model_id BIGINT = ?
+DECLARE @full_coverage BIT = ?
+DECLARE @partial_coverage BIT = ?
+DECLARE @individual_access_only BIT = ?
+DECLARE @role_access_only  BIT = ?
+DECLARE @no_access BIT = ?
+DECLARE @name NVARCHAR(MAX) = ?
 DECLARE @active_model_id BIGINT
 
 SET @active_model_id = (SELECT ROLE_MODEL_ID
