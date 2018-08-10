@@ -118,6 +118,25 @@ public class PersonageRepository implements Repository<Personage> {
         return entities;
     }
 
+    public List<Personage> findByRole(long id) throws SQLException, IOException {
+        List<Personage> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        CachedResourceReader.readString(getQueryResourceName("selectPersonagesByRole")))
+        ) {
+            st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
     private Personage createEntity(ResultSet rs) throws SQLException {
         return new Personage(
                 rs.getLong(1),

@@ -23,10 +23,15 @@ public class AccessRightController {
     }
 
     @GetMapping("role")
-    public Collection<AccessRight> getByPersonageResourceRole(@RequestParam(value="personageId") long personageId,
-                                                                     @RequestParam(value="resourceId") long resourceId,
-                                                                     @RequestParam(value="roleId") long roleId)
+    public Collection<AccessRight> getByPersonageResourceRole(
+            @RequestParam(value="personageId", defaultValue = "0") long personageId,
+            @RequestParam(value="resourceId") long resourceId,
+            @RequestParam(value="roleId") long roleId)
             throws SQLException, IOException {
-        return accessRightRepository.findByPersonageResourceRole(personageId, resourceId, roleId);
+        if (personageId != 0) {
+            return accessRightRepository.findByPersonageResourceRole(personageId, resourceId, roleId);
+        } else {
+            return accessRightRepository.findByRoleResource(roleId, resourceId);
+        }
     }
 }

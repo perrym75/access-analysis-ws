@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/access_right/selectAccessOfRoleResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/access_right/selectResourceAccessViaRoles.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/access_right/selectResourceAccessViaUserAccount.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/agent/selectAgent.sql" dialect="TSQL" />
@@ -20,6 +21,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonage.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonageByResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonagesByDepartment.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectPersonagesByRole.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/personage/selectRangeOfPersonages.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectAllPlatforms.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/platform/selectChildPlatforms.sql" dialect="TSQL" />
@@ -32,12 +34,15 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectResourcesByAgent.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectResourcesByPersonage.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectResourcesByRole.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/resource/selectRootResources.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectAllRoles.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectRole.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectRolesByPersonage.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectRolesByPersonageAndResource.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectRolesByResource.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role/selectRolesByRoleModel.sql" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role_model/selectActiveRoleModel.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role_model/selectAllRoleModels.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role_model/selectRangeOfRoleModels.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/mssql/role_model/selectRoleModel.sql" dialect="TSQL" />

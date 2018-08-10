@@ -98,6 +98,25 @@ public class RoleRepository implements Repository<Role> {
         return entities;
     }
 
+    public List<Role> findByRoleModel(long id) throws SQLException, IOException {
+        List<Role> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        CachedResourceReader.readString(getQueryResourceName("selectRolesByRoleModel")))
+        ) {
+            st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
     public List<Role> findByPersonageAndResource(long pers_id, long res_id) throws SQLException, IOException {
         List<Role> entities = new LinkedList<>();
 

@@ -161,6 +161,26 @@ public class ResourceRepository {
         return entities;
     }
 
+    public List<Resource> findByRole(long model_id, long id) throws SQLException, IOException {
+        List<Resource> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                PreparedStatement st = conn.prepareStatement(
+                        CachedResourceReader.readString(getQueryResourceName("selectResourcesByRole")))
+        ) {
+            st.setLong(1, model_id);
+            st.setLong(2, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
     private Resource createEntity(ResultSet rs) throws SQLException {
         String name = rs.getString(3);
         //name = name.substring(name.lastIndexOf('/') + 1);

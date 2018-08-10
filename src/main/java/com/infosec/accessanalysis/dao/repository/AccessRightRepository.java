@@ -105,6 +105,27 @@ public class AccessRightRepository implements Repository<AccessRight> {
         return entities;
     }
 
+    public List<AccessRight> findByRoleResource(long roleId, long resourceId)
+            throws SQLException, IOException {
+        List<AccessRight> entities = new LinkedList<>();
+
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                PreparedStatement st = conn.prepareStatement(
+                        CachedResourceReader.readString(getQueryResourceName("selectAccessOfRoleResource")))
+        ) {
+            st.setLong(1, roleId);
+            st.setLong(2, resourceId);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    entities.add(createEntity(rs));
+                }
+            }
+        }
+
+        return entities;
+    }
+
     private AccessRight createEntity(ResultSet rs) throws SQLException {
         return new AccessRight(
                 rs.getLong(1),

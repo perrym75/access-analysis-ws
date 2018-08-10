@@ -1,0 +1,9 @@
+SELECT
+  role.ROLE2_ID,
+  role.ROLE_MODEL_ID,
+  role.NAME
+FROM
+  ROLE2 role
+  INNER JOIN ROLE_MODEL rm ON role.ROLE_MODEL_ID = rm.ROLE_MODEL_ID
+WHERE
+  rm.ROLE_MODEL_ID = ?

@@ -37,6 +37,21 @@ public class RoleModelRepository implements Repository<RoleModel> {
         return null;
     }
 
+    public RoleModel findActive() throws SQLException, IOException {
+        try (
+                Connection conn = DriverManager.getConnection(dbUrl);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(
+                        CachedResourceReader.readString(getQueryResourceName("selectActiveRoleModel")))
+        ) {
+            if (rs.next()) {
+                return createEntity(rs);
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public List<RoleModel> findAll() throws SQLException, IOException {
         List<RoleModel> entities = new LinkedList<>();
