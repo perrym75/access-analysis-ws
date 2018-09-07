@@ -143,6 +143,7 @@ public class UserAccountRepository implements Repository<UserAccount> {
                 rs.getString(2),
                 rs.getLong(3),
                 rs.getLong(4),
-                rs.getInt(5));
+                rs.getInt(5),
+                rs.getInt(6));
     }
 }

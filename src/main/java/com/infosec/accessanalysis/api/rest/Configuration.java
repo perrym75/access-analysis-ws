@@ -35,7 +35,7 @@ public class Configuration {
                     break;
             }
         } catch(Exception ignored) {
-            logger.error("Could mot load configuration from " + CONFIGURATION_FILE + ".");
+            logger.error("Could not load configuration from " + CONFIGURATION_FILE + ".");
             System.exit(1);
         }
     }
