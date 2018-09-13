@@ -2,15 +2,17 @@ package com.infosec.accessanalysis.dao.model;
 
 public class UserAccount {
     private long id;
+    private long userAccountId;
     private String displayName;
     private long unitId;
     private long agentId;
     private int system;
     private int status;
 
-    public UserAccount(long id, String displayName, long unitId,
+    public UserAccount(long id, long userAccountId, String displayName, long unitId,
                        long agentId, int system, int status) {
         this.id = id;
+        this.userAccountId = userAccountId;
         this.displayName = displayName;
         this.unitId = unitId;
         this.agentId = agentId;
@@ -64,5 +66,13 @@ public class UserAccount {
 
     public void setSystem(int system) {
         this.system = system;
+    }
+
+    public long getUserAccountId() {
+        return userAccountId;
+    }
+
+    public void setUserAccountId(long userAccountId) {
+        this.userAccountId = userAccountId;
     }
 }
