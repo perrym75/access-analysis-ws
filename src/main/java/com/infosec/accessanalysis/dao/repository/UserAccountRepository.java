@@ -141,9 +141,9 @@ public class UserAccountRepository implements Repository<UserAccount> {
 
     private UserAccount createEntity(ResultSet rs) throws SQLException {
         java.util.Date curDate = new java.util.Date();
-        long utcOffset = Calendar.getInstance().getTimeZone().getOffset(Calendar.ZONE_OFFSET);
         int system = rs.getInt(6);
         if (system != 0) {
+            long utcOffset = Calendar.getInstance().getTimeZone().getOffset(Calendar.ZONE_OFFSET);
             Timestamp beginTS = rs.getTimestamp(7);
             Timestamp endTS = rs.getTimestamp(8);
             java.util.Date beginDate = beginTS == null ? null : new java.util.Date(beginTS.getTime() + utcOffset);
