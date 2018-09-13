@@ -142,10 +142,12 @@ public class UserAccountRepository implements Repository<UserAccount> {
     private UserAccount createEntity(ResultSet rs) throws SQLException {
         java.util.Date curDate = new java.util.Date();
         long utcOffset = Calendar.getInstance().getTimeZone().getOffset(Calendar.ZONE_OFFSET);
-        java.util.Date beginDate = new java.util.Date(rs.getTimestamp(7).getTime() + utcOffset);
-        java.util.Date endDate = new java.util.Date(rs.getTimestamp(8).getTime() + utcOffset);
         int system = rs.getInt(6);
         if (system != 0) {
+            Timestamp beginTS = rs.getTimestamp(7);
+            Timestamp endTS = rs.getTimestamp(8);
+            java.util.Date beginDate = beginTS == null ? null : new java.util.Date(beginTS.getTime() + utcOffset);
+            java.util.Date endDate = endTS == null ? null : new java.util.Date(endTS.getTime() + utcOffset);
             system = (beginDate == null || curDate.after(beginDate)) &&
                     (endDate == null || curDate.before(endDate)) ? 1 : 0;
         }
