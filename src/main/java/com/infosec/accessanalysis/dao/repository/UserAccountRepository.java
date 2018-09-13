@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class UserAccountRepository implements Repository<UserAccount> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -139,11 +141,14 @@ public class UserAccountRepository implements Repository<UserAccount> {
 
     private UserAccount createEntity(ResultSet rs) throws SQLException {
         java.util.Date curDate = new java.util.Date();
-        java.sql.Date beginDate = rs.getDate(7);
-        java.sql.Date endDate = rs.getDate(8);
-        int system = (rs.getInt(6) != 0) &&
-                (beginDate == null || curDate.after(beginDate)) &&
-                (endDate == null || curDate.before(endDate)) ? 1 : 0;
+        long utcOffset = Calendar.getInstance().getTimeZone().getOffset(Calendar.ZONE_OFFSET);
+        java.util.Date beginDate = new java.util.Date(rs.getTimestamp(7).getTime() + utcOffset);
+        java.util.Date endDate = new java.util.Date(rs.getTimestamp(8).getTime() + utcOffset);
+        int system = rs.getInt(6);
+        if (system != 0) {
+            system = (beginDate == null || curDate.after(beginDate)) &&
+                    (endDate == null || curDate.before(endDate)) ? 1 : 0;
+        }
         return new UserAccount(
                 rs.getLong(1),
                 rs.getLong(2),
